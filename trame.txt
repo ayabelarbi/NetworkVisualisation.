@@ -1,1 +1,169 @@
-Une trame Ethernet
+Les différentes couches réseaux & leurs protocole: 
+    
+    application     --      HTTP
+    transport       --      TPC / UDP 
+    réseaux         --      IP
+    liaison         --      ETHERNET (MAC)
+    physique        --      Pas de protocol
+
+
+--------------------------------------------------------------------------------------------------
+Liste de trame [
+    trame ETHERNET: 
+
+    trame ARP: 
+        hardware type : Ethernet
+        protocole IPv4 
+
+    trame IPv4 (encapsulant ETHERNET): 
+        End Of Options List(EOL)
+        No Operation (NOP)
+        Record Route (RR)
+        Loose Source Route (LSR)
+        Strict Source Route (SSR)
+        Router Alert
+        ip_hdr_len > 20 : IP header + IP option 
+        ip_hdr_len = 20 : IP header 
+
+    trame TCP (encasupant IP(encapsulant ETHERNET)): 
+    trame UDP (encapsulant IP(encapsulant ETHERNET)):
+    trame HTTP (encapsulant UPD / TCP(encapsulant IP(encapsulant ETHERNET))): 
+]
+
+
+
+--------------------------------------------------------------------------------------------------
+TRAME  1 (trame 267.ICMP):  
+0000   7e a1 ae 3c 42 64 10 a5 1d 96 fd bb 08 00 45 00   ~..<Bd........E.
+0010   00 5c 36 9d 40 00 08 01 00 00 ac 14 0a 02 68 f4   .\6.@.........h.
+0020   2a 41 08 00 e2 22 00 01 11 d8 20 20 20 20 20 20   *A..."....      
+0030   20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                   
+0040   20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                   
+0050   20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                   
+0060   20 20 20 20 20 20 20 20 20 20                               
+
+    TRAME ETHERNET : 
+0000   7e a1 ae 3c 42 64 10 a5 1d 96 fd bb 08 00         ~..<Bd........
+
+    TRAME IP : 
+0000   45 00 00 5c 36 9d 40 00 08 01 00 00 ac 14 0a 02   E..\6.@.........
+0010   68 f4 2a 41                                       h.*A
+
+    TRAME ICMP: 
+0000   08 00 e2 22 00 01 11 d8 20 20 20 20 20 20 20 20   ..."....        
+0010   20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                   
+0020   20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                   
+0030   20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                   
+0040   20 20 20 20 20 20 20 20                                   
+
+
+
+--------------------------------------------------------------------------------------------------
+TRAME  2 (trame 3779 - TCP):  
+0000   7e a1 ae 3c 42 64 10 a5 1d 96 fd bb 08 00 45 00   ~..<Bd........E.
+0010   00 28 be fc 40 00 80 06 00 00 ac 14 0a 02 0d 6b   .(..@..........k
+0020   05 5d f4 20 01 bb a2 f6 9e d7 64 df d3 13 50 10   .]. ......d...P.
+0030   02 02 c8 f8 00 00                                 ......
+                              
+    TRAME ETHERNET : 
+0000   7e a1 ae 3c 42 64 10 a5 1d 96 fd bb 08 00         ~..<Bd........
+
+    TRAME IP : 
+0000   45 00 00 28 be fc 40 00 80 06 00 00 ac 14 0a 02   E..(..@.........
+0010   0d 6b 05 5d                                       .k.]
+
+    TRAME TCP: 
+0000   f4 20 01 bb a2 f6 9e d7 64 df d3 13 50 10 02 02   . ......d...P...
+0010   c8 f8 00 00                                       ....
+
+
+
+--------------------------------------------------------------------------------------------------
+TRAME 3 (eth.type == 0x0806 (ARP))
+0000   7e a1 ae 3c 42 64 10 a5 1d 96 fd bb 08 06 00 01   ~..<Bd..........
+0010   08 00 06 04 00 01 10 a5 1d 96 fd bb ac 14 0a 02   ................
+0020   7e a1 ae 3c 42 64 ac 14 0a 01                     ~..<Bd....
+
+    TRAME ETHERNET :
+0000   7e a1 ae 3c 42 64 10 a5 1d 96 fd bb 08 06         ~..<Bd........
+
+    TRAME ARP : 
+0000   00 01 08 00 06 04 00 01 10 a5 1d 96 fd bb ac 14   ................
+0010   0a 02 7e a1 ae 3c 42 64 ac 14 0a 01               ..~..<Bd....
+
+
+--------------------------------------------------------------------------------------------------
+TRAME 4 (HTTP)
+0000   7e a1 ae 3c 42 64 10 a5 1d 96 fd bb 86 dd 60 00   ~..<Bd........`.
+0010   00 00 01 5b 06 ff 2a 01 cb 06 a0 28 3a 73 a5 66   ...[..*....(:s.f
+0020   a0 da d9 1b dc b3 00 64 ff 9b 00 00 00 00 00 00   .......d........
+0030   00 00 84 e3 c9 21 f3 fa 00 50 f0 91 f1 29 67 bc   .....!...P...)g.
+0040   0f 86 50 18 02 03 1b 1b 00 00 47 45 54 20 2f 7e   ..P.......GET /~
+0050   68 65 72 70 73 6f 6e 63 2f 66 72 2f 65 6e 73 65   herpsonc/fr/ense
+0060   69 67 6e 65 6d 65 6e 74 2f 20 48 54 54 50 2f 31   ignement/ HTTP/1
+0070   2e 31 0d 0a 48 6f 73 74 3a 20 77 77 77 2d 64 65   .1..Host: www-de
+0080   73 69 72 2e 6c 69 70 36 2e 66 72 0d 0a 43 6f 6e   sir.lip6.fr..Con
+0090   6e 65 63 74 69 6f 6e 3a 20 6b 65 65 70 2d 61 6c   nection: keep-al
+00a0   69 76 65 0d 0a 55 73 65 72 2d 41 67 65 6e 74 3a   ive..User-Agent:
+00b0   20 4d 6f 7a 69 6c 6c 61 2f 35 2e 30 20 28 57 69    Mozilla/5.0 (Wi
+00c0   6e 64 6f 77 73 20 4e 54 20 31 30 2e 30 3b 20 57   ndows NT 10.0; W
+00d0   69 6e 36 34 3b 20 78 36 34 29 20 41 70 70 6c 65   in64; x64) Apple
+00e0   57 65 62 4b 69 74 2f 35 33 37 2e 33 36 20 28 4b   WebKit/537.36 (K
+00f0   48 54 4d 4c 2c 20 6c 69 6b 65 20 47 65 63 6b 6f   HTML, like Gecko
+0100   29 20 43 68 72 6f 6d 65 2f 31 30 37 2e 30 2e 30   ) Chrome/107.0.0
+0110   2e 30 20 53 61 66 61 72 69 2f 35 33 37 2e 33 36   .0 Safari/537.36
+0120   0d 0a 41 63 63 65 70 74 3a 20 2a 2f 2a 0d 0a 53   ..Accept: */*..S
+0130   65 63 2d 47 50 43 3a 20 31 0d 0a 41 63 63 65 70   ec-GPC: 1..Accep
+0140   74 2d 4c 61 6e 67 75 61 67 65 3a 20 66 72 2d 46   t-Language: fr-F
+0150   52 2c 66 72 3b 71 3d 30 2e 38 0d 0a 50 75 72 70   R,fr;q=0.8..Purp
+0160   6f 73 65 3a 20 70 72 65 66 65 74 63 68 0d 0a 41   ose: prefetch..A
+0170   63 63 65 70 74 2d 45 6e 63 6f 64 69 6e 67 3a 20   ccept-Encoding: 
+0180   67 7a 69 70 2c 20 64 65 66 6c 61 74 65 0d 0a 0d   gzip, deflate...
+0190   0a                                                .
+
+
+    TRAME ETHERNET: 
+0000   7e a1 ae 3c 42 64 10 a5 1d 96 fd bb 86 dd         ~..<Bd........
+
+    TRAME IP
+0000   60 00 00 00 01 5b 06 ff 2a 01 cb 06 a0 28 3a 73   `....[..*....(:s
+0010   a5 66 a0 da d9 1b dc b3 00 64 ff 9b 00 00 00 00   .f.......d......
+0020   00 00 00 00 84 e3 c9 21                           .......!
+
+    TRAME TCP
+0000   f3 fa 00 50 f0 91 f1 29 67 bc 0f 86 50 18 02 03   ...P...)g...P...
+0010   1b 1b 00 00                                       ....
+
+    TRAME HTTP
+0000   47 45 54 20 2f 7e 68 65 72 70 73 6f 6e 63 2f 66   GET /~herpsonc/f
+0010   72 2f 65 6e 73 65 69 67 6e 65 6d 65 6e 74 2f 20   r/enseignement/ 
+0020   48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20   HTTP/1.1..Host: 
+0030   77 77 77 2d 64 65 73 69 72 2e 6c 69 70 36 2e 66   www-desir.lip6.f
+0040   72 0d 0a 43 6f 6e 6e 65 63 74 69 6f 6e 3a 20 6b   r..Connection: k
+0050   65 65 70 2d 61 6c 69 76 65 0d 0a 55 73 65 72 2d   eep-alive..User-
+0060   41 67 65 6e 74 3a 20 4d 6f 7a 69 6c 6c 61 2f 35   Agent: Mozilla/5
+0070   2e 30 20 28 57 69 6e 64 6f 77 73 20 4e 54 20 31   .0 (Windows NT 1
+0080   30 2e 30 3b 20 57 69 6e 36 34 3b 20 78 36 34 29   0.0; Win64; x64)
+0090   20 41 70 70 6c 65 57 65 62 4b 69 74 2f 35 33 37    AppleWebKit/537
+00a0   2e 33 36 20 28 4b 48 54 4d 4c 2c 20 6c 69 6b 65   .36 (KHTML, like
+00b0   20 47 65 63 6b 6f 29 20 43 68 72 6f 6d 65 2f 31    Gecko) Chrome/1
+00c0   30 37 2e 30 2e 30 2e 30 20 53 61 66 61 72 69 2f   07.0.0.0 Safari/
+00d0   35 33 37 2e 33 36 0d 0a 41 63 63 65 70 74 3a 20   537.36..Accept: 
+00e0   2a 2f 2a 0d 0a 53 65 63 2d 47 50 43 3a 20 31 0d   */*..Sec-GPC: 1.
+00f0   0a 41 63 63 65 70 74 2d 4c 61 6e 67 75 61 67 65   .Accept-Language
+0100   3a 20 66 72 2d 46 52 2c 66 72 3b 71 3d 30 2e 38   : fr-FR,fr;q=0.8
+0110   0d 0a 50 75 72 70 6f 73 65 3a 20 70 72 65 66 65   ..Purpose: prefe
+0120   74 63 68 0d 0a 41 63 63 65 70 74 2d 45 6e 63 6f   tch..Accept-Enco
+0130   64 69 6e 67 3a 20 67 7a 69 70 2c 20 64 65 66 6c   ding: gzip, defl
+0140   61 74 65 0d 0a 0d 0a                              ate....
+
+
+
+
+
+
+Commande wireshark simplifiant:
+eth.type == 0x806 = ARP 
+eth.type == 0x0800 = I
+
+
