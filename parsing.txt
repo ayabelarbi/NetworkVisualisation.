@@ -1,0 +1,19 @@
+Parsing de fichier : 
+    1. On vérifie tous les offsetes et on ignore 
+    les lignes avec un offset erroné. 
+
+
+    2. On parcours les lignes restantes et on vérifie si 
+    chaque ligne est complète et valide. 
+
+    3. On met les trames valides dans une liste, 
+    les trames non valides dans une autre 
+    (permet de récupérer un compteur qui parcourera la liste 
+    afin de détérminer le nombre de trame non valide et le nombre de trame valide)
+
+    nb_trame_errone = len(tab_trame_erronne)
+    nb_trame_correct = len(tab_trame_correct) 
+
+    4. On garde une liste des lignes des trames incompléte ou invalide. 
+     
+     vive le maroc
