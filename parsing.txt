@@ -15,4 +15,5 @@ Parsing de fichier :
     nb_trame_correct = len(tab_trame_correct) 
 
     4. On garde une liste des lignes des trames incompléte ou invalide. 
-    
+     
+     vive le maroc
