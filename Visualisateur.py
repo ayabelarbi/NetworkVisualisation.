@@ -2,15 +2,16 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk 
 from tkinter.ttk import *
-from tkinter import tkFont
 
+
+import tkinter.font as TkFont 
 import os
 import extraction
 
 
 #utilité de webbrowser 
 
-class App: 
+class Visualisateur: 
     #creation du constructeur
     def __init__(self):
         #création d'une première interface, 
@@ -25,12 +26,12 @@ class App:
         self.bienvenu=Label(self.interface, text="Bienvenue dans le visualisateur de trafic réseau !")
         self.bienvenu.pack()
 
-
         #configuration des boutons et du texte 
         self.btn.config(width=20, padding=10, style="")
 
         self.btn.pack(side=TOP)
-        self.btn.place(relx=0.3, rely= 0.3, anchor=CENTER)
+        self.btn.place(relx=0.5, rely= 0.5, anchor=CENTER)
+        self.bienvenu.place(relx= 0.5, rely= 0.3, anchor=CENTER)
 
 
 
@@ -51,6 +52,8 @@ class App:
 
     def affichageTrame(self):
         #affichage d'une nouvelle page, donc destruction des pages précédentes
+        self.interface.mainloop()
+
         self.bienvenu.destroy()
         self.btn.destroy()
 
@@ -58,8 +61,7 @@ class App:
         self.framelistBox = Frame(self.interface, width=1200, height=500)
         self.framelistBox.pack(side=TOP)
         #creation d'une liste box 
-        listBoxStyle = tkFont.Font(font="Times", weight="bold", size=30)
-        self.listBox = Listbox(self.framelistBox,listBoxStyle, width=90, height=30)
+        self.listBox = Listbox(self.framelistBox, font="Times", width=90, height=30)
         self.listBox.pack(side= LEFT)
         
         #CREATION D'UNE SCROLLBAR POUR SCROOL LA LISTE BOX 
@@ -74,40 +76,43 @@ class App:
         #ajout des filtres 
         
 
-    def affichage(self,trames):
+    def affichage(self):
         #pour afficher la fenêtre il faut une boucle infinie
         #mais programme déjà disponible par tkinter
-        self.interface.mainloop()
-
-        for trame in trames: 
-            trameresultat=self.analyse(trame)
-            self.listBox.insert(END, trameresultat)
-            color = {'background': '#548f6f'}
-            self.listBox.itemconfig(0,{'bg'})
+        return #
+        #for trame in trames: 
+        #   trameresultat=self.analyse(trame)
+        #    self.listBox.insert(END, trameresultat)
+        #    color = {'background': '#548f6f'}
+        #    self.listBox.itemconfig(0,{'bg'})
         #A FINIR
 
 
     def analyse(self,trame):
         flecheDroite="--------→"
         flecheGauche="←--------"
-        eth = extraction.extraction_eth(trame)
+
+        eth_entete  = extraction.extraction_eth(trame)
         
-        if(not extraction.is_tcp(trame)): 
-            (eth[1]+fleche+eth[0]+'Pas une trame Ethernet')
+        if (not extraction.is_trame_ip(trame)): 
+            pas_eth = (eth_entete[1], "",flecheDroite+eth_entete[0],"", "None",'Pas une trame Ethernet')
+            return pas_eth
 
         entete_ip = extraction.extraire_ip(trame)
         
-        #adresses ip paire
-        couple=self.couple_ip(ip[7],ip[8])
+        #adresses ip pair
+        couple=self.couple_ip(entete_ip[7], entete_ip[8])
+
 
     #A FINIR 
-
+        
 
 
 
 if __name__ == "__main__":
-    newinterface = App()
-    newinterface.affichage()
+    newinterface = Visualisateur()
+    #newinterface.affichage()
+    newinterface.affichageTrame()
 
 
 
