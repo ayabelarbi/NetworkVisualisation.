@@ -53,7 +53,7 @@ class Visualisateur:
 
     def affichageTrame(self):
         #affichage d'une nouvelle page, donc destruction des pages précédentes
-        self.interface.mainloop()
+       
 
         self.bienvenu.destroy()
         self.btn.destroy()
@@ -70,6 +70,7 @@ class Visualisateur:
         scroll.pack(side=RIGHT, fill=Y)
         scroll.config(command=self.listBox.yview)
         self.listBox.config(yscrollcommand=scroll.set)
+        self.interface.mainloop()
 
 
     def affichage(self):
@@ -98,11 +99,8 @@ class Visualisateur:
         
         #adresses ip pair
         couple=self.couple_ip(entete_ip[7], entete_ip[8])
-
-
     #A FINIR 
-        
-
+    
 
 
 if __name__ == "__main__":

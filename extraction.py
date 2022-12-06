@@ -23,12 +23,12 @@ def extraction_eth(trame)->Eth:
     return (dest_addres, src_addres,type_eth)
 
 
-def test_extraction_eth(trame)-> Eth: 
-    extraction_eth(trame)
+#def test_extraction_eth(trame)-> Eth: 
+#    extraction_eth(trame)
 
 
 #taille d'une adresse IP = 20 octets
-def extraction_ip(trame)-> Ip: 
+#def extraction_ip(trame)-> Ip: 
     
     #version = trame[1]
     #header_length = trame[2]
@@ -54,10 +54,12 @@ def address_IP(adress : int)->str:
 
 
 def extraction_tcp(trame)->tcp: 
+
     return #l'entête ip (header, ihl ...)
 
-def extraction_flags_tcp(trame)->tcp_flags: 
 
+def extraction_flags_tcp(trame)->tcp_flags: 
+    #SYN, FIN, RST, ACK, PSH, URG 
     return #les flags tcp 
 
 
@@ -70,12 +72,13 @@ def is_trame_ip(trame)-> bool:
 
 
 def is_trame_tcp(trame)->bool:
+    #si le 23ème octet est 06 alors trame encapsule tcp 
     return trame[23] =='06'
 
 
 def is_trame_http(trame)->bool: 
     #extraction de la trame tcp
-    # si le port dest ou port src = 80 alors tcp encapsule http 
+    tcp = extraction_tcp(trame)
 
-    #tcp[1] ou tcp[0] = 50 (cf wireshark)
-    return #booleen 
+    #si addresse_source=80 (50 en hexa) ou addresse_dest=80 alors http 
+    return(tcp[0] == '50' or tcp[1] =='50')
