@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 08580b3925ab1b6d5f2f0f42c992733567c90b9d
 #lecture de la trames 
 def lecture(filename):
     return 
