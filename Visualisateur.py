@@ -7,6 +7,7 @@ from tkinter.ttk import *
 import tkinter.font as TkFont 
 import os
 import extraction
+import parsing 
 
 
 #utilité de webbrowser 
@@ -70,11 +71,6 @@ class Visualisateur:
         scroll.config(command=self.listBox.yview)
         self.listBox.config(yscrollcommand=scroll.set)
 
-
-        #ajout de la sauvegarde des fichiers 
-
-        #ajout des filtres 
-        
 
     def affichage(self):
         #pour afficher la fenêtre il faut une boucle infinie

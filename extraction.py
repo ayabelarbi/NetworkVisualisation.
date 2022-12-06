@@ -1,7 +1,5 @@
 from parsing import lecture 
-
-
-#Tuple des 
+#Tuple des protocol
 Eth=tuple[str,str,str] #adress dest, adress src, type 
 Ip=tuple[str,str,str,str,str,str,str,str,str,str,str]
 ip_flags=tuple[str,str]
@@ -12,8 +10,6 @@ tcp_flags= tuple[str,str,str,str,str,str]
 def extraction_flags_ip(flags_offset:str) -> tuple[str,str]:
     #function permettant de décortiquer la trame ip 
     return #le drapeau et l'offset 
-
-
 
 #0000   f4 20 01 bb a2 f6 9e d7 64 df d3 13 50 10 02 02   . ......d...P...
 #0010   c8 f8 00 00                                       ....
@@ -34,21 +30,19 @@ def test_extraction_eth(trame)-> Eth:
 #taille d'une adresse IP = 20 octets
 def extraction_ip(trame)-> Ip: 
     
-    version = trame[1]
-    header_length = trame[2]
-    protocol = trame[]
-    header_checksum = trame[]
-    total_length = trame[]
-    identifier = trame[]
-    fragment_offset = trame[]
-    ttl = trame[]
-    flags = trame[]
-    flags, fragment_offset = extraction_flags_ip(fragment_offset)
-    return (version, header_length, total_length, identifier, flags, fragment_offset, protocol, src_address, dest_address,options) 
+    #version = trame[1]
+    #header_length = trame[2]
+    #protocol = trame[]
+    #total_length = trame[]
+    #identifier = trame[]
+    #fragment_offset = trame[]
+    #ttl = trame[]
+    #flags = trame[]
+    #flags, fragment_offset = extraction_flags_ip(fragment_offset)
+    #return (version, header_length, total_length, identifier, flags, fragment_offset, protocol, src_address, dest_address,options) 
 
 def extraction_flags_ip(trame) ->ip_flags: 
     ip_flags = tuple[str,str]
-
     return ip_flags 
 
 
@@ -73,8 +67,11 @@ def is_trame_ip(trame)-> bool:
     #trame ip trame[12:14]=['08','00']
     return (trame[12:14] == ['08','00'] and trame[14][0]=='4')
 
+
+
 def is_trame_tcp(trame)->bool:
     return trame[23] =='06'
+
 
 def is_trame_http(trame)->bool: 
     #extraction de la trame tcp
