@@ -1,5 +1,5 @@
 
-import re
+
 
 
 #lecture de la trames 
