@@ -17,3 +17,4 @@ Parsing de fichier :
     4. On garde une liste des lignes des trames incompléte ou invalide. 
      
      vive le maroc
+

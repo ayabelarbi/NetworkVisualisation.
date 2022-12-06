@@ -1,81 +1,61 @@
-import re
-import string
-from tkinter.constants import NONE
+from parsing import lecture 
 
-from analyse import Ethernet
+Eth=tuple[str,str,str] #adress dest, adress src, type 
+Ip=tuple[str,str,str,str,str,str,str,str,str,str,str]
+ip_flags=tuple[str,str]
+tcp= tuple[str,str,str,str,str,str,str,str,str]
+tcp_flags= tuple[str,str,str,str,str,str]
 
-def Test_Offset(a) :
-    if len(a)> 4 or a.isalpha():
-        return False
-    else :
-        return True
 
-def Extract_line(result,a,tab,l):
-    tmp=[]
-    for i in range(len(tab)):
-        if len(tab[i])==2 and all(c in string.hexdigits for c in tab[i]) :
-            tmp.append(tab[i])
-    if len(tmp) >= a :
-        for j in range(a):
-            result.append(tmp[j])
-    else :
-        return "Error line "+str(l)
-    return NONE
+def extraction_flags( offset:str) -> tuple[str,str]:
+    #function permettant de décortiquer la trame ip 
+    return #le drapeau et l'offset 
 
-def Extract_final_line(result,tab) :
-    line=Last_line(tab).split(' ')[1:]
-    tmp=[]
-    for i in range(len(line)):
-        if len(line[i])==2 and all(c in string.hexdigits for c in line[i]) :
-            tmp.append(line[i])
-    for j in range(len(tmp)):
-        result.append(tmp[j])
 
-def No_empty(tab):
-    tmp=[]
-    for i in range(len(tab)):
-        if not (tab[i]=='') :
-            tmp.append(tab[i])
-    return tmp
- 
-def Last_line(trame):
-    i=1
-    while (not Test_Offset(trame[len(trame)-i].split(' ')[0])):
-        trame=trame[:i]
-        i+=1
-    return trame[len(trame)-1]
 
-def Extract_Trame(trame):
-    result =[]
-    p_line=trame.split('\n')[0].split(' ')
-    p_offset='0'
-    tmp=No_empty(trame.split('\n')[1:])
-    if tmp == [] :
-        return p_line
-    #print(tmp)
-    for i in range(len(tmp)) :
-        line=tmp[i].split(' ')
-        offset=line[0]
-        if not Test_Offset(offset) :
-            continue
-        diff = int(int(offset,16) - int(p_offset,16))
-        error=Extract_line(result,diff,p_line,i+1)
-        if error is not NONE : 
-            return error
-        p_line=line[1:]
-        p_offset=offset
-    Extract_final_line(result,tmp)
-    return result
+#Extraction de la trame ethernet en decimal 
+def extraction_eth(trame)->Eth:
+    return #entête eth 
 
-def Clean_file (trame_raw) :
-    f = open("Trame_Clear.txt", "w")
-    for i in trame_raw :
-        trame_clean=Extract_Trame(i)
-        p=int(trame_clean[16]+trame_clean[17],16)+14
-        trame_clean=trame_clean[:p]
-        if "Error line" not in trame_clean:
-            for j in trame_clean:
-                f.write(j)
-                f.write(' ')
-            f.write('\n\n')
-    f.close
+
+#taille d'une adresse IP = 20 octets
+def extraction_ip(trame)-> Ip: 
+
+    return #l'entête ip (header, ihl ...)
+
+def extraction_flags_ip(trame) ->ip_flags: 
+    return 
+
+
+
+
+#creation de l'adress IP 
+#fonction qui convertie une adresse décimal en chaîne de caractère 
+def address_IP(adress : int)->str: 
+    return 
+
+
+def extraction_tcp(trame)->Tcp: 
+    return #l'entête ip (header, ihl ...)
+
+def extraction_flags_tcp(trame)->tcp_flags: 
+    return #les flags tcp 
+
+
+
+#déclaration de booléen afin de définir le protocol encapsuler dans les trames 
+def is_trame_ip(trame)-> bool:
+    #trame ip trame[12:14]=['08','00']
+    return 
+
+def is_trame_tcp(trame)->bool:
+    #trame tcp si trame[23] = "06"
+    #23ème octet de la trame annonce si la trame est un tcp 
+    return #booleen 
+
+def is_trame_http(trame)->bool: 
+    #extraction de la trame tcp
+    # si le port dest ou port src = 80 alors tcp encapsule http 
+
+    #tcp[1] ou tcp[0] = 50 (cf wireshark)
+    return #booleen 

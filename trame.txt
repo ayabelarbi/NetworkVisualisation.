@@ -9,7 +9,13 @@ Les différentes couches réseaux & leurs protocole:
 
 --------------------------------------------------------------------------------------------------
 Liste de trame [
-    trame ETHERNET: 
+    présuposée : pas de préambule dans les trames ethernet 
+    trame ETHERNET: 14 octets 
+        [1 : 6] = @ sources
+        [7 : 12] = @ destination
+        [13, 14] = ["08","00"] = ip 
+        [13 : 14] = []
+
 
     trame ARP: 
         hardware type : Ethernet
@@ -164,6 +170,60 @@ TRAME 4 (HTTP)
 
 Commande wireshark simplifiant:
 eth.type == 0x806 = ARP 
-eth.type == 0x0800 = I
+eth.type == 0x0800 = IP
+eth.type == 0x06 = TCP 
 
 
+
+
+0000   8e 86 1e 5c bf 64 10 a5 1d 96 fd bb 86 dd 60 00   ...\.d........`.
+0010   00 00 01 a8 06 ff 2a 01 cb 01 10 0b 20 19 6c 3c   ......*..... .l<
+0020   1a 56 e4 44 3b 5f 20 01 06 7c 02 e8 00 25 00 00   .V.D;_ ..|...%..
+0030   00 00 c1 00 0b 17 f2 a8 00 50 37 88 6c 9f 65 8a   .........P7.l.e.
+0040   67 ea 50 18 02 03 c2 ad 00 00 47 45 54 20 2f 20   g.P.......GET / 
+0050   48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20   HTTP/1.1..Host: 
+0060   72 6f 6f 74 2d 73 65 72 76 65 72 73 2e 6f 72 67   root-servers.org
+0070   0d 0a 43 6f 6e 6e 65 63 74 69 6f 6e 3a 20 6b 65   ..Connection: ke
+0080   65 70 2d 61 6c 69 76 65 0d 0a 55 70 67 72 61 64   ep-alive..Upgrad
+0090   65 2d 49 6e 73 65 63 75 72 65 2d 52 65 71 75 65   e-Insecure-Reque
+00a0   73 74 73 3a 20 31 0d 0a 55 73 65 72 2d 41 67 65   sts: 1..User-Age
+00b0   6e 74 3a 20 4d 6f 7a 69 6c 6c 61 2f 35 2e 30 20   nt: Mozilla/5.0 
+00c0   28 57 69 6e 64 6f 77 73 20 4e 54 20 31 30 2e 30   (Windows NT 10.0
+00d0   3b 20 57 69 6e 36 34 3b 20 78 36 34 29 20 41 70   ; Win64; x64) Ap
+00e0   70 6c 65 57 65 62 4b 69 74 2f 35 33 37 2e 33 36   pleWebKit/537.36
+00f0   20 28 4b 48 54 4d 4c 2c 20 6c 69 6b 65 20 47 65    (KHTML, like Ge
+0100   63 6b 6f 29 20 43 68 72 6f 6d 65 2f 31 30 37 2e   cko) Chrome/107.
+0110   30 2e 30 2e 30 20 53 61 66 61 72 69 2f 35 33 37   0.0.0 Safari/537
+0120   2e 33 36 0d 0a 41 63 63 65 70 74 3a 20 74 65 78   .36..Accept: tex
+0130   74 2f 68 74 6d 6c 2c 61 70 70 6c 69 63 61 74 69   t/html,applicati
+0140   6f 6e 2f 78 68 74 6d 6c 2b 78 6d 6c 2c 61 70 70   on/xhtml+xml,app
+0150   6c 69 63 61 74 69 6f 6e 2f 78 6d 6c 3b 71 3d 30   lication/xml;q=0
+0160   2e 39 2c 69 6d 61 67 65 2f 61 76 69 66 2c 69 6d   .9,image/avif,im
+0170   61 67 65 2f 77 65 62 70 2c 69 6d 61 67 65 2f 61   age/webp,image/a
+0180   70 6e 67 2c 2a 2f 2a 3b 71 3d 30 2e 38 0d 0a 53   png,*/*;q=0.8..S
+0190   65 63 2d 47 50 43 3a 20 31 0d 0a 41 63 63 65 70   ec-GPC: 1..Accep
+01a0   74 2d 4c 61 6e 67 75 61 67 65 3a 20 66 72 2d 46   t-Language: fr-F
+01b0   52 2c 66 72 3b 71 3d 30 2e 39 0d 0a 41 63 63 65   R,fr;q=0.9..Acce
+01c0   70 74 2d 45 6e 63 6f 64 69 6e 67 3a 20 67 7a 69   pt-Encoding: gzi
+01d0   70 2c 20 64 65 66 6c 61 74 65 0d 0a 0d 0a         p, deflate....
+
+
+
+
+Trame TCP 
+0000   f2 a8 00 50 37 88 6c 9f 65 8a 67 ea 50 18 02 03   ...P7.l.e.g.P...
+0010   c2 ad 00 00                                       ....
+
+
+
+Trame EThernet 
+0000   8e 86 1e 5c bf 64 10 a5 1d 96 fd bb 86 dd         ...\.d........
+
+Trame[1 : 6] = adresse_mac_destination
+Trame[7 : 12] = adress_mac_source
+trame[13 : 14 ] = type_eth 
+
+Trame IP 
+0000   60 00 00 00 01 a8 06 ff 2a 01 cb 01 10 0b 20 19   `.......*..... .
+0010   6c 3c 1a 56 e4 44 3b 5f 20 01 06 7c 02 e8 00 25   l<.V.D;_ ..|...%
+0020   00 00 00 00 c1 00 0b 17                           ........
