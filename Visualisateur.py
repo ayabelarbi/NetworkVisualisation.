@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import filedialog
+from tkinter import filedialog as fd
 from tkinter import ttk 
 from tkinter.ttk import *
 
@@ -7,10 +7,9 @@ from tkinter.ttk import *
 import tkinter.font as TkFont 
 import os
 import extraction
-import parsing 
 
+import parsing
 
-#utilité de webbrowser 
 
 class Visualisateur: 
     #creation du constructeur
@@ -18,12 +17,13 @@ class Visualisateur:
         #création d'une première interface, 
         self.interface = Tk()
         #Personnalisation de cette fenêtre 
-        self.interface.title("Visualisateur de Trafic")
+        self.interface.title("Visualisateur de Trafic réseau")
         self.interface.geometry("1080x720")
         self.interface.minsize(1080,720)
+
         self.interface.config(background ='#548f6f')
         self.interface.resizable(height=True, width=True)
-        self.btn=ttk.Button(self.interface, text =" Ouvrir un fichier", command=self.openFile)
+        self.btn=ttk.Button(self.interface, text =" Ouvrir un fichier", command=self.openfile)
         self.bienvenu=Label(self.interface, text="Bienvenue dans le visualisateur de trafic réseau !")
         self.bienvenu.pack()
 
@@ -36,25 +36,28 @@ class Visualisateur:
 
 
 
-    def openFile(self):
-        fichier = filedialog.askopenfilename(
+    def openfile(self):
+
+        filetypes = ( 
+            (('text files', '*.txt'),
+            ('All files', '*.*')
+        ))
+
+        fichier = fd.askopenfilename(
                                 initialdir = os.getcwd(),
                                 title = 'Selectionner un fichier',
-                                filetypes=(("fichier texte","*.txt")))
-        self.openframe= input.input(fichier)
-        if (self.first):
-            self.affichageTrame()
-        #affichage des frames 
+                                filetypes= filetypes)
 
+        self.frames= parsing.parsing(fichier)
+
+
+        #affichage des différentes frames (il peut y en avoir plusieurs dans le fichier ) 
         self.affichageFrame(self.frames)
         self.first=False
-        print(self.openframe)
+        print(self.affichageFrame)
 
 
-    def affichageTrame(self):
-        #affichage d'une nouvelle page, donc destruction des pages précédentes
-       
-
+    def parsingTrame(self): 
         self.bienvenu.destroy()
         self.btn.destroy()
 
@@ -70,19 +73,23 @@ class Visualisateur:
         scroll.pack(side=RIGHT, fill=Y)
         scroll.config(command=self.listBox.yview)
         self.listBox.config(yscrollcommand=scroll.set)
-        self.interface.mainloop()
 
 
-    def affichage(self):
-        #pour afficher la fenêtre il faut une boucle infinie
-        #mais programme déjà disponible par tkinter
-        return #
-        #for trame in trames: 
-        #   trameresultat=self.analyse(trame)
-        #    self.listBox.insert(END, trameresultat)
-        #    color = {'background': '#548f6f'}
-        #    self.listBox.itemconfig(0,{'bg'})
-        #A FINIR
+
+
+    def affichageFrame(self, frames): 
+        for frame in frames: 
+            src, srcport, fleche, dest, destport, prot, des, = self.analyse(frame)
+            self.listbox.insert(END, src)
+            self.listbox.insert(END, srcport)
+            self.listbox.insert(END, fleche)
+            self.listbox.insert(END, dest)
+            self.listbox.insert(END, destport)
+            self.listbox.insert(END, prot)
+            self.listbox.insert(END, des)
+        
+            self.i = self.i+1
+        
 
 
     def analyse(self,trame):
@@ -103,10 +110,15 @@ class Visualisateur:
     
 
 
+
+    def affichage(self):
+        self.interface.mainloop()
+      
+
 if __name__ == "__main__":
     newinterface = Visualisateur()
     #newinterface.affichage()
-    newinterface.affichageTrame()
+    newinterface.affichage()
 
 
 

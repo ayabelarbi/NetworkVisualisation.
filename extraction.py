@@ -1,4 +1,5 @@
-from parsing import lecture 
+import parsing 
+
 #Tuple des protocol
 Eth=tuple[str,str,str] #adress dest, adress src, type 
 Ip=tuple[str,str,str,str,str,str,str,str,str,str,str]
@@ -54,7 +55,6 @@ def address_IP(adress : int)->str:
 
 
 def extraction_tcp(trame)->tcp: 
-
     return #l'entête ip (header, ihl ...)
 
 

@@ -1,12 +1,34 @@
+import re # 
+import string 
+
+#lecture d'un fichier de trame et retour d'une liste de trame 
+def parsing(filename):
+    #creation d'une liste acceuillant les trames 
+    trame = []
+    trame_courrante = []
+
+    with open(filename,'r') as f: 
+        lignes = f.readlines()
+        prems = lignes[0]
+       
+        for ligne in lignes: 
+            ligne_indice = ligne.strip().split(' ')
+            #si l'offset = '0000'
+            if ligne_indice[0] == '0000': 
+                #si la trame courrante n'est pas vide, mais que l'offset = '0000'
+                if trame_courrante !=[] : 
+                    #rajout des trames courrante
+                    trame.append(trame_courrante)
+                    trame_courrante=[]
+            
+            #déclanchement des exceptions si la trame n'est pas nettoyer 
+            #if(ligne_indice[0] == '0000' and prems == ligne): 
+                #raise Exception("Trame invalid numéro 1 (l'offset est invalide)")  
 
 
+    trame.append(trame_courrante)
 
-
-#lecture de la trames 
-def lecture(filename):
-    return 
-
-
+    return trame 
 
 
 #permet de convertir les fichiers hexa to ascii 
