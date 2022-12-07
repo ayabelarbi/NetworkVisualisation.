@@ -21,16 +21,17 @@ class Visualisateur:
         self.interface.geometry("1080x720")
         self.interface.minsize(1080,720)
 
+
         self.interface.config(background ='#548f6f')
         self.interface.resizable(height=True, width=True)
-        self.btn=ttk.Button(self.interface, text =" Ouvrir un fichier", command=self.openfile)
-        self.bienvenu=Label(self.interface, text="Bienvenue dans le visualisateur de trafic réseau !")
+        self.btn=ttk.Button(self.interface, text =" Veuillez ouvrir un fichier contenant une trame", command=self.openfile)
+        self.bienvenu=Label(self.interface, font=("Courier", 20), background='#548f6f', text="Bienvenue dans le visualisateur de trafic réseau !")
         self.bienvenu.pack()
 
         #configuration des boutons et du texte 
-        self.btn.config(width=20, padding=10, style="")
+        self.btn.config(width=60, padding=10, style="")
 
-        self.btn.pack(side=TOP)
+        self.btn.pack(side=TOP, pady=25, fill=X)
         self.btn.place(relx=0.5, rely= 0.5, anchor=CENTER)
         self.bienvenu.place(relx= 0.5, rely= 0.3, anchor=CENTER)
 
@@ -57,7 +58,8 @@ class Visualisateur:
         print(self.affichageFrame)
 
 
-    def parsingTrame(self): 
+
+    def visualisateur_structure(self): 
         self.bienvenu.destroy()
         self.btn.destroy()
 
@@ -79,7 +81,7 @@ class Visualisateur:
 
     def affichageFrame(self, frames): 
         for frame in frames: 
-            src, srcport, fleche, dest, destport, prot, des, = self.analyse(frame)
+            src_ip, srcport, fleche, dest_ip, destport, prot, des, = self.analyse(frame)
             self.listbox.insert(END, src)
             self.listbox.insert(END, srcport)
             self.listbox.insert(END, fleche)
@@ -99,11 +101,15 @@ class Visualisateur:
         eth_entete  = extraction.extraction_eth(trame)
         
         if (not extraction.is_trame_ip(trame)): 
-            pas_eth = (eth_entete[1], "",flecheDroite+eth_entete[0],"", "None",'Pas une trame Ethernet')
+            pas_eth = (eth_entete[1], "",flecheDroite,eth_entete[0],"", "None",'Pas une trame Ethernet')
             return pas_eth
 
         entete_ip = extraction.extraire_ip(trame)
-        
+       
+
+
+
+
         #adresses ip pair
         couple=self.couple_ip(entete_ip[7], entete_ip[8])
     #A FINIR 

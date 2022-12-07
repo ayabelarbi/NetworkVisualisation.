@@ -29,7 +29,7 @@ def extraction_eth(trame)->Eth:
 
 
 #taille d'une adresse IP = 20 octets
-#def extraction_ip(trame)-> Ip: 
+def extraction_ip(trame)-> Ip: 
     
     #version = trame[1]
     #header_length = trame[2]
@@ -40,7 +40,7 @@ def extraction_eth(trame)->Eth:
     #ttl = trame[]
     #flags = trame[]
     #flags, fragment_offset = extraction_flags_ip(fragment_offset)
-    #return (version, header_length, total_length, identifier, flags, fragment_offset, protocol, src_address, dest_address,options) 
+    return (version, header_length, total_length, identifier, flags, fragment_offset, protocol, src_address, dest_address,options) 
 
 def extraction_flags_ip(trame) ->ip_flags: 
     ip_flags = tuple[str,str]
