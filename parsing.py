@@ -9,8 +9,9 @@ def parsing(filename):
 
     with open(filename,'r') as f: 
         lignes = f.readlines()
+        print(lignes)
         prems = lignes[0]
-       
+        print(prems)
         for ligne in lignes: 
             ligne_indice = ligne.strip().split(' ')
             #si l'offset = '0000'

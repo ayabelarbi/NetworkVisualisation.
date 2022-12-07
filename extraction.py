@@ -17,6 +17,8 @@ def extraction_flags_ip(flags_offset:str) -> tuple[str,str]:
 
 #Extraction de la trame ethernet en decimal 
 def extraction_eth(trame)->Eth:
+    print("voici ce qu'il y a dans la trame[1]",trame[0])
+    print("voici ce qu'il y a dans la trame[2]",trame[1])
     dest_addres = trame[1] +':'+ trame[2]+':'+ trame[3]+':'+ trame[4] +':'+ trame[5]+':'+ trame[6]
     src_addres = trame[7] +':'+  trame[8] +':'+ trame[9]+':'+  trame[10] +':'+  trame[11] +':'+ trame[12]
     type_eth = trame[13] + trame[14]
