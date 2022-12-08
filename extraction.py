@@ -1,4 +1,6 @@
 import parsing 
+import sys
+import os
 
 #Tuple des protocol
 Eth=tuple[str,str,str] #adress dest, adress src, type 
