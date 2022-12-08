@@ -6,6 +6,7 @@ from tkinter.ttk import *
 
 import tkinter.font as TkFont 
 import os
+import sys
 import extraction
 
 import parsing
@@ -21,7 +22,7 @@ class Visualisateur:
         self.interface.geometry("1080x720")
         self.interface.minsize(1080,720)
 
-
+        self.premier_fichier_ouvert = True
         self.interface.config(background ='#548f6f')
         self.interface.resizable(height=True, width=True)
         self.btn=ttk.Button(self.interface, text =" Veuillez ouvrir un fichier contenant une trame", command=self.openfile)
@@ -34,7 +35,7 @@ class Visualisateur:
         self.btn.pack(side=TOP, pady=25, fill=X)
         self.btn.place(relx=0.5, rely= 0.5, anchor=CENTER)
         self.bienvenu.place(relx= 0.5, rely= 0.3, anchor=CENTER)
-
+        self.i = 0
 
 
     def openfile(self):
@@ -49,30 +50,37 @@ class Visualisateur:
                                 title = 'Selectionner un fichier',
                                 filetypes= filetypes)
 
-        self.frames= parsing.parsing(fichier)
+        self.fichier_frames= parsing.parsing(fichier)
 
+        if (self.premier_fichier_ouvert):
+            self.visualisateur_structure()
 
         #affichage des différentes frames (il peut y en avoir plusieurs dans le fichier ) 
-        self.affichageFrame(self.frames)
-        self.first=False
-        print(self.affichageFrame)
+        self.affichageFrame(self.fichier_frames)
+        self.premier_fichier_ouvert=False
+        print(self.fichier_frames)
 
 
-
+#front du visualisateur 
     def visualisateur_structure(self): 
         self.bienvenu.destroy()
         self.btn.destroy()
+        self.interface.config(background ='white')
 
         #creation d'un menu permettant d'afficher les cadres des listbox et en scrollbar
-        self.framelistBox = Frame(self.interface, width=1200, height=500)
+        self.framelistBox = Frame(self.interface, width=1020, height=720)
         self.framelistBox.pack(side=TOP)
         #creation d'une liste box 
         self.listBox = Listbox(self.framelistBox, font="Times", width=90, height=30)
         self.listBox.pack(side= LEFT)
         
+
+
+
+
         #CREATION D'UNE SCROLLBAR POUR SCROOL LA LISTE BOX 
         scroll = Scrollbar(self.listBox, orient='vertical')
-        scroll.pack(side=RIGHT, fill=Y)
+        scroll.pack(fill="both", expand="yes", padx = 10, pady=10)       
         scroll.config(command=self.listBox.yview)
         self.listBox.config(yscrollcommand=scroll.set)
 
@@ -82,10 +90,10 @@ class Visualisateur:
     def affichageFrame(self, frames): 
         for frame in frames: 
             src_ip, srcport, fleche, dest_ip, destport, prot, des, = self.analyse(frame)
-            self.listbox.insert(END, src)
+            self.listbox.insert(END, src_ip)
             self.listbox.insert(END, srcport)
             self.listbox.insert(END, fleche)
-            self.listbox.insert(END, dest)
+            self.listbox.insert(END, dest_ip)
             self.listbox.insert(END, destport)
             self.listbox.insert(END, prot)
             self.listbox.insert(END, des)
@@ -106,7 +114,6 @@ class Visualisateur:
 
         entete_ip = extraction.extraire_ip(trame)
        
-
 
 
 

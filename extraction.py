@@ -17,6 +17,7 @@ def extraction_flags_ip(flags_offset:str) -> tuple[str,str]:
 
 #Extraction de la trame ethernet en decimal 
 def extraction_eth(trame)->Eth:
+    print("voici la trame", trame)
     print("voici ce qu'il y a dans la trame[1]",trame[0])
     print("voici ce qu'il y a dans la trame[2]",trame[1])
     dest_addres = trame[1] +':'+ trame[2]+':'+ trame[3]+':'+ trame[4] +':'+ trame[5]+':'+ trame[6]
@@ -84,3 +85,7 @@ def is_trame_http(trame)->bool:
 
     #si addresse_source=80 (50 en hexa) ou addresse_dest=80 alors http 
     return(tcp[0] == '50' or tcp[1] =='50')
+
+#hexadecimal -> decimal 
+def to_decimal(a) :
+    return int(a,base=16)
