@@ -81,6 +81,7 @@ class Visualisateur:
         ))
 
         fichier = fd.askopenfilename(
+<<<<<<< Updated upstream
                                 initialdir = os.getcwd(),
                                 title = 'Selectionner un fichier',
                                 filetypes= filetypes)
@@ -89,6 +90,14 @@ class Visualisateur:
 
 
         print(self.fichier_frames)
+=======
+            initialdir = os.getcwd(),
+            title = 'Selectionner un fichier',
+            filetypes= filetypes)
+        
+        fichier_frames= self.lecture(fichier)
+        print(fichier_frames)
+>>>>>>> Stashed changes
 
         if (self.premier_fichier_ouvert):
             self.visualisateur_structure()
