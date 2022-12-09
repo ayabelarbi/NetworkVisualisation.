@@ -84,9 +84,10 @@ class Visualisateur:
             initialdir = os.getcwd(),
             title = 'Selectionner un fichier',
             filetypes= filetypes)
-        
-        fichier_frames= self.lecture(fichier)
-        print(fichier_frames)
+
+
+        self.fichier_frames= fichier
+        print(self.fichier_frames)
 
         if (self.premier_fichier_ouvert):
             self.visualisateur_structure()
