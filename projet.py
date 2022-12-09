@@ -148,8 +148,9 @@ def methodhttp(Trame):
     return res
         
   
-"""
 
+
+"""
 def flowgraph(Trames):
     for Trame in Trames:
         if(ipv4(Trame) and tcp(Trame) and http(Trame)):
@@ -167,4 +168,4 @@ def flowgraph(Trames):
             print("IP source", ipsource(Trame), "--------> IP destination", ipdestination(Trame))
         print("\n")
         
-flowgraph(lecture(sys.argv[1]))
+flowgraph(lecture(sys.argv[1]))"""

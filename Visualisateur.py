@@ -42,7 +42,35 @@ class Visualisateur:
         self.bienvenu.place(relx= 0.5, rely= 0.3, anchor=CENTER)
         self.i = 0
 
-    """lecturefile = []"""
+    def lecture(file):
+    #ouvre le fichier texte
+        with open(file, "r+") as file:
+            lines = [l for l in (line.strip() for line in file) if l]  # retire les lignes vides
+            Trames = []
+            Trame = []
+            first = True
+            for l in lines:
+                #retirer les espace au debut et a la fin de la ligne
+                l = l.strip()
+                #on separe l'offset et le code hexa
+                split = l.split("  ")
+                offset = split[0]
+                if (offset == "0000"):
+                    if not first:
+                        Trames.append(Trame)
+                        Trame = []
+                    first = False
+                #on split par des espaces
+                ltrame = split[1].split(" ")
+                #on retire les espaces vides
+                ltrame = [x for x in ltrame if x]
+                #converti l'offset en hexa
+                offset = int(split[0], 16) 
+                Trame.append(ltrame)
+        #ferme le fichier
+        file.close()
+        return Trames
+
 
     def openfile(self):
 
@@ -56,15 +84,11 @@ class Visualisateur:
                                 title = 'Selectionner un fichier',
                                 filetypes= filetypes)
 
-        self.fichier_frames= parsing.parsing(fichier)
+        self.fichier_frames=  Visualisateur.lecture(fichier)
 
         if (self.premier_fichier_ouvert):
             self.visualisateur_structure()
 
-        """
-        self.analyse(fichier)
-        self.lecturefile.insert(projet.lecture(fichier))
-        """
 
         #affichage des différentes frames (il peut y en avoir plusieurs dans le fichier) 
         self.affichageFrame(self.fichier_frames)
@@ -81,7 +105,7 @@ class Visualisateur:
 
 
         #creation d'un menu permettant d'afficher les cadres des listbox et en scrollbar
-        self.frame = Frame(self.interface, width=1020, height=720 )
+        self.frame = Frame(self.interface, width=1000, height=720 )
         self.frame.pack(side=TOP)
 
         # listboxsrc = src_ip
@@ -97,8 +121,8 @@ class Visualisateur:
         src_port=Label(self.frame,text="port1",font=("Courier", 14))
         src_port.grid(row=0,column=1,sticky="s",pady=(30,0))
         # listboxfleche = fleche 
-        self.listboxfleche=Listbox(self.frame,width=40,height=16,borderwidth=0,highlightthickness=0,font=("Courier", 16))
-        self.listboxfleche.grid(row=1,column=2,pady=30)
+        self.listboxfleche=Listbox(self.frame,width=20,height=16,borderwidth=0,highlightthickness=0,font=("Courier", 16))
+        self.listboxfleche.grid(row=0,column=2,pady=30)
 
         #listboxdestination = destination 
         self.listboxdestination=Listbox(self.frame,width=14,height=16,borderwidth=0,highlightthickness=0,font=("Courier", 14))
@@ -124,15 +148,16 @@ class Visualisateur:
 
         #scrollbar
         scroll = Scrollbar(self.frame, orient='vertical')
-        scroll.pack()  
-        self.listboxsrc.config(yscrollcommand=scrollbar.set)
-        self.listboxsrc_port.config(yscrollcommand=scrollbar.set)
-        self.listboxfleche.config(yscrollcommand=scrollbar.set)
-        self.listboxdestination.config(yscrollcommand=scrollbar.set)
-        self.listboxdestinationport.config(yscrollcommand=scrollbar.set)
-        self.listboxProtocol.config(yscrollcommand=scrollbar.set)
-        self.listBoxDescription.config(yscrollcommand=scrollbar.set)
+   
+        self.listboxsrc.config(yscrollcommand=scroll.set)
+        self.listboxsrc_port.config(yscrollcommand=scroll.set)
+        self.listboxfleche.config(yscrollcommand=scroll.set)
+        self.listboxdestination.config(yscrollcommand=scroll.set)
+        self.listboxdestinationport.config(yscrollcommand=scroll.set)
+        self.listboxProtocol.config(yscrollcommand=scroll.set)
+        self.listBoxDescription.config(yscrollcommand=scroll.set)
 
+        scroll.pack()  
         #creation de la liste de liste, permettant d'acceuillir toute les listes obtenue
         #par la fonction analyse
         #self.listListBox = Listbox(self.listBox, )
@@ -167,38 +192,9 @@ class Visualisateur:
     """
 
 
-    def lecture(file):
-    #ouvre le fichier texte
-        with open(file, "r+") as file:
-            lines = [l for l in (line.strip() for line in file) if l]  # retire les lignes vides
-            Trames = []
-            Trame = []
-            first = True
-            for l in lines:
-                #retirer les espace au debut et a la fin de la ligne
-                l = l.strip()
-                #on separe l'offset et le code hexa
-                split = l.split("  ")
-                offset = split[0]
-                if (offset == "0000"):
-                    if not first:
-                        Trames.append(Trame)
-                        Trame = []
-                    first = False
-                #on split par des espaces
-                ltrame = split[1].split(" ")
-                #on retire les espaces vides
-                ltrame = [x for x in ltrame if x]
-                #converti l'offset en hexa
-                offset = int(split[0], 16) 
-                Trame.append(ltrame)
-        #ferme le fichier
-        file.close()
-        return Trames
-
+   
         
     def affichageFrame(self, listTrame): 
-
 
         for trame in listTrame: 
             src_ip, srcport, fleche, dest_ip, destport, protocole, description = self.analyse(listFrame)
@@ -211,6 +207,8 @@ class Visualisateur:
             self.listBoxDescription.insert(END, description)
         
             self.i = self.i+1
+
+        
     
 
     def analyse(self,trame):
