@@ -84,7 +84,9 @@ class Visualisateur:
                                 title = 'Selectionner un fichier',
                                 filetypes= filetypes)
 
-        self.fichier_frames=  Visualisateur.lecture(fichier)
+        self.fichier_frames= self.lecture(fichier)
+
+        print(self.fichier_frames)
 
         if (self.premier_fichier_ouvert):
             self.visualisateur_structure()
@@ -191,13 +193,26 @@ class Visualisateur:
         scrollbar.config(command = liste.yview )
     """
 
-
    
         
     def affichageFrame(self, listTrame): 
 
         for trame in listTrame: 
-            src_ip, srcport, fleche, dest_ip, destport, protocole, description = self.analyse(listFrame)
+            src_ip = projet.ipsource(trame)
+            print(src_ip)
+            srcport = projet.ipsource(trame)
+            print(srcport)
+            fleche = "----------------------------------->"
+            print(fleche)
+            dest_ip = projet.ipdstport(trame)
+            print(dest_ip )
+            destport = projet.tcp.dstport(trame)
+            print(destport)
+            protocole = "TCP"
+            print(protocole)
+            description = projet.tcpflags(trame)
+            print(description)
+
             self.listboxsrc.insert(END, src_ip)
             self.listboxsrc_port.insert(END, srcport)
             self.listboxfleche.insert(END, fleche)
@@ -208,7 +223,6 @@ class Visualisateur:
         
             self.i = self.i+1
 
-        
     
 
     def analyse(self,trame):
