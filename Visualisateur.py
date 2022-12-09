@@ -14,6 +14,9 @@ import tkinter as tk
 import parsing
 import projet
 
+
+
+
 class Visualisateur: 
     #creation du constructeur
     def __init__(self):
@@ -80,28 +83,57 @@ class Visualisateur:
         #creation d'un menu permettant d'afficher les cadres des listbox et en scrollbar
         self.frame = Frame(self.interface, width=1020, height=720 )
         self.frame.pack(side=TOP)
-   
-        # create listboxes to display the frames
 
 
-        # listbox1 = source
-        self.listboxsrc = Listbox(self.frame, width=14, height=16,borderwidth=0,highlightthickness=0,font=("Courier", 14),exportselection=0,activestyle="none",background="#f0f0f0")
-        self.listboxsrc.grid(row=1,column=0,pady=30)
-        ip1label=Label(self.listboxsrc,text="Ip1",font=("Courier", 14))
+
+        # listboxsrc = src_ip
+        self.listboxsrc = Listbox(self.frame, width=14, height=16,borderwidth=0,highlightthickness=0,font=("Courier", 16))
+        self.listboxsrc.grid(row=0,column=0,pady=30)
+        ip1label=Label(self.listboxsrc,text="ip1",font=("Courier", 14))
         ip1label.grid(row=0,column=0,sticky="s",pady=(30,0))
-        self.listboxlabel1=Label(self.listboxsrc,text="Ip1",font=("Courier", 14))
+        self.listboxlabel1=Label(self.frame,text="Ip1",font=("Courier", 14))
 
-        #creation des différentes listBoxe pour afficher les différentes partie de la trame
-        #self.listBox = Listbox(self.frame, font="Times", width=90, height=30)
-        #self.listBox.pack(side= LEFT)
-        self.framelistBox = Frame(self.interface, width=1020, height=720)
-        self.framelistBox.pack(side=TOP)
-        
-        #creation d'une liste box 
-        self.listBox = Listbox(self.framelistBox, font="Times", width=90, height=30)
-        self.listBox.pack(side= LEFT, fill = BOTH)
-        
-    
+        # listboxsrc_port = port source
+        self.listboxsrc_port = Listbox(self.frame, width=14, height=16,borderwidth=0,highlightthickness=0,font=("Courier", 16))
+        self.listboxsrc_port.grid(row=1,column=1,pady=30)
+        src_port=Label(self.frame,text="port1",font=("Courier", 14))
+        src_port.grid(row=0,column=1,sticky="s",pady=(30,0))
+        # listboxfleche = fleche 
+        self.listboxfleche=Listbox(self.frame,width=40,height=16,borderwidth=0,highlightthickness=0,font=("Courier", 16))
+        self.listboxfleche.grid(row=1,column=2,pady=30)
+
+        #listboxdestination = destination 
+        self.listboxdestination=Listbox(self.frame,width=14,height=16,borderwidth=0,highlightthickness=0,font=("Courier", 14))
+        self.listboxdestination.grid(row=1,column=3,pady=30)
+        ip2label=Label(self.frame,text="ip2",font=("Courier", 14))
+        ip2label.grid(row=0,column=3,sticky="s",pady=(30,0))
+
+        #listboxdestinationport = port destination
+        self.listboxdestinationport=Listbox(self.frame,width=7,height=16,borderwidth=0,highlightthickness=0,font=("Courier", 14))
+        self.listboxdestinationport.grid(row=1,column=4,pady=30)
+        port2label=Label(self.frame,text="port2",font=("Courier", 14))
+        port2label.grid(row=0,column=4,sticky="s",pady=(30,0))
+        #listboxProtocol = protocol encapsulé
+        self.listboxProtocol=Listbox(self.frame,width=9,height=16,borderwidth=0,highlightthickness=0,font=("Courier", 14))
+        self.listboxProtocol.grid(row=1,column=5,pady=30)
+        protocol=Label(self.frame,text="Protocol",font=("Courier", 14))
+        protocol.grid(row=0,column=5,sticky="s",pady=(30,0))
+        # listBoxDescription = Description
+        self.listBoxDescription=Listbox(self.frame,width=35,height=16,borderwidth=0,highlightthickness=0,font=("Courier", 14))
+        self.listBoxDescription.grid(row=1,column=6,pady=30)
+        description=Label(self.frame,text="Description",font=("Courier", 14))
+        description.grid(row=0,column=6,sticky="s",pady=(30,0))
+
+        #scrollbar
+        scrollbar = Scrollbar(self.interface)
+        scrollbar.pack( side = RIGHT, fill = Y )
+        self.listboxsrc.config(yscrollcommand=scrollbar.set)
+        self.listboxsrc_port.config(yscrollcommand=scrollbar.set)
+        self.listboxfleche.config(yscrollcommand=scrollbar.set)
+        self.listboxdestination.config(yscrollcommand=scrollbar.set)
+        self.listboxdestinationport.config(yscrollcommand=scrollbar.set)
+        self.listboxProtocol.config(yscrollcommand=scrollbar.set)
+        self.listBoxDescription.config(yscrollcommand=scrollbar.set)
 
         #creation de la liste de liste, permettant d'acceuillir toute les listes obtenue
         #par la fonction analyse
@@ -110,20 +142,17 @@ class Visualisateur:
         #CREATION D'UNE SCROLLBAR POUR SCROOL LA LISTE BOX 
         scroll = Scrollbar(self.frame, orient='vertical')
         scroll.pack()  
-        #scroll.pack(fill="both", expand="yes", padx = 10, pady=10)       
-        scroll.config(command=self.frame.yview)
-        self.listBox.config(yscrollcommand=scroll.set)
         
 
       # scroll one listbox scrolls all others
     def __multiple_yview(self,*args): 
-        self.listbox1.yview(*args)
-        self.listbox2.yview(*args)
-        self.listbox3.yview(*args)
-        self.listbox4.yview(*args)
-        self.listbox5.yview(*args)
-        self.listbox6.yview(*args)
-        self.listbox7.yview(*args)
+        self.listboxsrc.yview(*args)
+        self.listboxsrc_port.yview(*args)
+        self.listboxfleche.yview(*args)
+        self.listboxdestination.yview(*args)
+        self.listboxdestinationport.yview(*args)
+        self.listboxProtocol.yview(*args)
+        self.listBoxDescription.yview(*args)
 
     """def analyse(self,trame):
   
@@ -141,34 +170,11 @@ class Visualisateur:
         """
 
         
-    
-    """
-    def analyse(self,Trame):
-
-        for Trame in Trame:
-            if(extraction.ipv4(Trame) and extraction.tcp(Trame) and extraction.http(Trame)):
-                self.listBox.insert("Couche la plus haute : HTTP"+"\n")
-                self.listBox.insert(extraction.ipsource(Trame),"                                                                                       ",extraction.ipdestination(Trame)+"\n")
-                self.listBox.insert("                                             ",extraction.methodhttp(Trame)+"\n")
-                self.listBox.insert("   ",extraction.tcpsrcport(Trame),"------------------------------------------------------------------------------------------------->",extraction.tcpdstport(Trame)+"\n")
-            if(extraction.ipv4(Trame) and extraction.tcp(Trame) and not extraction.http(Trame)):
-                self.listBox.insert("Couche la plus haute : TCP"+"\n")
-                self.listBox.insert(extraction.ipsource(Trame),"                                                                                       ",extraction.ipdestination(Trame)+"\n")
-                self.listBox.insert("               ",extraction.tcpflags2(Trame),extraction.tcpflags(Trame), "Win =",extraction.tcpWindow(Trame),"Len =", extraction.tcplen(Trame),"Seq =",extraction.tcpseq(Trame),"Ack =",extraction.tcpack(Trame)+"\n")
-                self.listBox.insert("   ",extraction.tcpsrcport(Trame),"------------------------------------------------------------------------------------------------->",extraction.tcpdstport(Trame)+"\n")
-                #print("Commentaire : ",tcpsrcport(Trame), " -> ", tcpdstport(Trame), tcpflags2(Trame),"Seq =",tcpseq(Trame), tcpflags(Trame), "Win =", tcpWindow(Trame), "Len =", tcplen(Trame))
-            if(extraction.ipv4(Trame) and not extraction.tcp(Trame) and not extraction.http(Trame)):
-                self.listBox.insert("IP source", extraction.ipsource(Trame), "--------> IP destination", extraction.ipdestination(Trame)+"\n")
-            self.listBox.insert("\n")
-    """
-
-
-    
     def affichageFrame(self, listFrame): 
         for frames in listFrame: 
             src_ip, srcport, fleche, dest_ip, destport, protocole, description = self.analyse(listFrame)
-            self.listbox.insert(END, src_ip)
-            self.listbox.insert(END, srcport)
+            self.listboxsrc.insert(END, src_ip)
+            self.listboxsrc_port.insert(END, srcport)
             self.listbox.insert(END, fleche)
             self.listbox.insert(END, dest_ip)
             self.listbox.insert(END, destport)
@@ -178,11 +184,9 @@ class Visualisateur:
             self.i = self.i+1
     
 
-    
     def analyse(self,trame):
 
         flecheDroite="--------→"
-        flecheGauche="←--------"
 
         #creation des entetes différentes 
         eth_entete  = extraction.extraction_eth(trame)
@@ -195,8 +199,6 @@ class Visualisateur:
         if (not extraction.is_trame_ip(trame)): 
             pas_eth = (eth_entete[1], "",flecheDroite,eth_entete[0],"", "vide",'Pas une trame Ethernet')
             return pas_eth
-
-       
 
         #verification de l'entete IP, minimum 20 octet de longueur
         if (int(ip_entete[1],16)*4 < 20): 
@@ -235,17 +237,10 @@ class Visualisateur:
         #si le port n'est pas 80 
         if (tcp_entete[0] =='0050' or tcp_entete[1] =='0050'): 
             http = extraction.extraction_http(trame)
-
- def analyse(self,frame):
-
-    
-            infos=infos+" [FIN]"
-        if ( tcp_header[0]=='0050' or tcp_header[1]=='0050'): # if the port is not 80 (HTTP)
-            http=extract.extract_http(frame)
-            infos=infos+" "+http    
-            prot=prot+"/HTTP"
-            
-        return (extract.str_to_ip(ip_header[7]),str(int(tcp_header[0],16)),arrow,extract.str_to_ip(ip_header[8]),str(int(tcp_header[1],16)),prot,infos,color)
+            description = description+ " " + http 
+            protocole = protocole+"/HTTP"
+        
+        return (str_ip_src, str(int(tcp_entete[0],16)), flecheDroite,str_ip_dest, str(int(tcp_entete[1], 16)), protocole, description)
 
 
     def affichage(self):
