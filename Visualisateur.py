@@ -9,6 +9,7 @@ import tkinter.font as TkFont
 import os
 import sys
 import extraction
+import tkinter as tk
 
 import parsing
 import projet
@@ -17,7 +18,7 @@ class Visualisateur:
     #creation du constructeur
     def __init__(self):
         #création d'une première interface, 
-        self.interface = Tk()
+        self.interface = tk.Tk()
         #Personnalisation de cette fenêtre 
         self.interface.title("Visualisateur de Trafic réseau")
         self.interface.geometry("1080x720")
@@ -120,9 +121,6 @@ class Visualisateur:
         scrollbar.pack(side = RIGHT, fill=Y, expand="yes", padx = 10, pady=10)
         scrollbar.config(command=self.listBox.yview)
         self.listBox.config(yscrollcommand=scrollbar.set)
-
-
-
     
         
         """
@@ -162,16 +160,10 @@ class Visualisateur:
     """
 
 
-
-
-
-
-
-
     
-    def affichageFrame(self, frames): 
-        for frame in frames: 
-            src_ip, srcport, fleche, dest_ip, destport, prot, des, = self.analyse(frame)
+    def affichageFrame(self, listFrame): 
+        for frames in listFrame: 
+            src_ip, srcport, fleche, dest_ip, destport, prot, des, = self.analyse(listFrame)
             self.listbox.insert(END, src_ip)
             self.listbox.insert(END, srcport)
             self.listbox.insert(END, fleche)
@@ -182,8 +174,6 @@ class Visualisateur:
         
             self.i = self.i+1
     
-        
-
 
     """
     def analyse(self,trame):
@@ -206,25 +196,6 @@ class Visualisateur:
         couple=self.couple_ip(entete_ip[7], entete_ip[8])
     #A FINIR 
     """
-
-
-
-
-    def affichageFrame(self, frames): 
-        for frame in frames: 
-            src_ip, srcport, fleche, dest_ip, destport, prot, description, = self.analyse(frame)
-            self.itemlist.append((src_ip, srcport, fleche, dest_ip, destport, prot, description))
-
-
-            self.listbox.insert(END, src_ip)
-            self.listbox.insert(END, srcport)
-            self.listbox.insert(END, fleche)
-            self.listbox.insert(END, dest_ip)
-            self.listbox.insert(END, destport)
-            self.listbox.insert(END, prot)
-            self.listbox.insert(END, description)
-        
-            self.i = self.i+1
         
 
 

@@ -2,7 +2,7 @@ import sys
 import os
 
 
-def lecture(file):
+"""def lecture(file):
     #ouvre le fichier texte
     with open(file, "r+") as file:
         lines = [l for l in (line.strip() for line in file) if l]  # retire les lignes vides
@@ -30,7 +30,7 @@ def lecture(file):
         #ferme le fichier
         file.close()
         return Trames
-
+"""
 
 def ipv4(Trame):
     return (Trame[0][12] == "08" and Trame[0][13] == "00")
@@ -147,7 +147,7 @@ def methodhttp(Trame):
   
 
 
-def flowgraph(Trames):
+"""def flowgraph(Trames):
     for Trame in Trames:
         if(ipv4(Trame) and tcp(Trame) and http(Trame)):
             print("Couche la plus haute : HTTP")
@@ -164,4 +164,4 @@ def flowgraph(Trames):
             print("IP source", ipsource(Trame), "--------> IP destination", ipdestination(Trame))
         print("\n")
         
-flowgraph(lecture(sys.argv[1]))
+flowgraph(lecture(sys.argv[1]))"""
