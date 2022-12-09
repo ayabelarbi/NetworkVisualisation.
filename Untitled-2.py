@@ -172,7 +172,6 @@ top=Tk()
 
 
 #liste.pack(side = LEFT, fill = BOTH )
-#scrollbar.config(command = listeBox.yview )
 
 
 # def analyse(self,Trame):

@@ -166,11 +166,44 @@ class Visualisateur:
         scrollbar.config(command = liste.yview )
     """
 
-        
-    def affichageFrame(self, listFrame): 
 
-        for frames in listFrame: 
+    def lecture(file):
+    #ouvre le fichier texte
+        with open(file, "r+") as file:
+            lines = [l for l in (line.strip() for line in file) if l]  # retire les lignes vides
+            Trames = []
+            Trame = []
+            first = True
+            for l in lines:
+                #retirer les espace au debut et a la fin de la ligne
+                l = l.strip()
+                #on separe l'offset et le code hexa
+                split = l.split("  ")
+                offset = split[0]
+                if (offset == "0000"):
+                    if not first:
+                        Trames.append(Trame)
+                        Trame = []
+                    first = False
+                #on split par des espaces
+                ltrame = split[1].split(" ")
+                #on retire les espaces vides
+                ltrame = [x for x in ltrame if x]
+                #converti l'offset en hexa
+                offset = int(split[0], 16) 
+                Trame.append(ltrame)
+        #ferme le fichier
+        file.close()
+        return Trames
+
+        
+    def affichageFrame(self, listTrame): 
+
+
+        for trame in listTrame: 
+
             src_ip, srcport, fleche, dest_ip, destport, protocole, description = self.analyse(listFrame)
+            
             self.listboxsrc.insert(END, src_ip)
             self.listboxsrc_port.insert(END, srcport)
             self.listboxfleche.insert(END, fleche)
