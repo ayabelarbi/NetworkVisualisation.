@@ -32,7 +32,6 @@ def lecture(file):
         return Trames
 
 
-"""
 
 def ipv4(Trame):
     return (Trame[0][12] == "08" and Trame[0][13] == "00")
@@ -148,7 +147,7 @@ def methodhttp(Trame):
     return res
         
   
-"""
+
 
 """def flowgraph(Trames):
     for Trame in Trames:

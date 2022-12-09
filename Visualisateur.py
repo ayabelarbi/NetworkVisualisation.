@@ -201,9 +201,7 @@ class Visualisateur:
 
 
         for trame in listTrame: 
-
             src_ip, srcport, fleche, dest_ip, destport, protocole, description = self.analyse(listFrame)
-            
             self.listboxsrc.insert(END, src_ip)
             self.listboxsrc_port.insert(END, srcport)
             self.listboxfleche.insert(END, fleche)
