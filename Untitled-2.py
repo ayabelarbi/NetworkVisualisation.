@@ -160,8 +160,8 @@ def methodhttp(Trame):
         j = j + 1
     return res
 
+listbox=[] 
 def analyse(self,Trame):
-
         for Trame in Trame:
             if(self.ipv4(Trame) and self.tcp(Trame) and self.http(Trame)):
                 self.listBox.insert("Couche la plus haute : HTTP"+"\n")
@@ -189,7 +189,7 @@ scrollbar.pack( side = RIGHT, fill = Y )
 
 liste = Listbox(top, yscrollcommand = scrollbar.set )
 
-liste.insert(END,Listbox)
+liste.insert(END,)
 
 liste.pack(side = LEFT, fill = BOTH )
 scrollbar.config(command = liste.yview )
