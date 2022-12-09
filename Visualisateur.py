@@ -11,7 +11,7 @@ import sys
 import extraction
 
 import parsing
-
+import projet
 
 class Visualisateur: 
     #creation du constructeur
@@ -38,6 +38,7 @@ class Visualisateur:
         self.bienvenu.place(relx= 0.5, rely= 0.3, anchor=CENTER)
         self.i = 0
 
+    """lecturefile = []"""
 
     def openfile(self):
 
@@ -56,12 +57,18 @@ class Visualisateur:
         if (self.premier_fichier_ouvert):
             self.visualisateur_structure()
 
+        """
+        self.analyse(fichier)
+        self.lecturefile.insert(projet.lecture(fichier))
+        """
+
         #affichage des différentes frames (il peut y en avoir plusieurs dans le fichier ) 
         self.affichageFrame(self.fichier_frames)
         self.premier_fichier_ouvert=False
         print(self.fichier_frames)
 
-
+    
+    
 #front du visualisateur 
     def visualisateur_structure(self): 
         self.bienvenu.destroy()
@@ -86,15 +93,18 @@ class Visualisateur:
         #creation des différentes listBoxe pour afficher les différentes partie de la trame
         #self.listBox = Listbox(self.frame, font="Times", width=90, height=30)
         #self.listBox.pack(side= LEFT)
+        self.framelistBox = Frame(self.interface, width=1020, height=720)
+        self.framelistBox.pack(side=TOP)
+        
+        #creation d'une liste box 
+        self.listBox = Listbox(self.framelistBox, font="Times", width=90, height=30)
+        self.listBox.pack(side= LEFT, fill = BOTH)
         
     
 
         #creation de la liste de liste, permettant d'acceuillir toute les listes obtenue
         #par la fonction analyse
         #self.listListBox = Listbox(self.listBox, )
-
-
-
 
         #CREATION D'UNE SCROLLBAR POUR SCROOL LA LISTE BOX 
         scroll = Scrollbar(self.frame, orient='vertical')
@@ -106,6 +116,78 @@ class Visualisateur:
     def analyse(self,trame):
 
         #retourne la trame analyse 
+        scrollbar = Scrollbar(self.listBox, orient='vertical')
+        scrollbar.pack(side = RIGHT, fill=Y, expand="yes", padx = 10, pady=10)
+        scrollbar.config(command=self.listBox.yview)
+        self.listBox.config(yscrollcommand=scrollbar.set)
+
+
+
+    
+        
+        """
+        gui = Tk()
+
+        scrollbar = Scrollbar(gui)
+        scrollbar.pack( side = RIGHT, fill = Y )
+
+        liste = Listbox(gui, yscrollcommand = scrollbar.set )
+        for i in range(1,201):
+            liste.insert(END, str(i) + " - Hello World!")
+
+        liste.pack(side = LEFT, fill = BOTH )
+        scrollbar.config(command = liste.yview )
+        """
+
+        
+    
+    """
+    def analyse(self,Trame):
+
+        for Trame in Trame:
+            if(extraction.ipv4(Trame) and extraction.tcp(Trame) and extraction.http(Trame)):
+                self.listBox.insert("Couche la plus haute : HTTP"+"\n")
+                self.listBox.insert(extraction.ipsource(Trame),"                                                                                       ",extraction.ipdestination(Trame)+"\n")
+                self.listBox.insert("                                             ",extraction.methodhttp(Trame)+"\n")
+                self.listBox.insert("   ",extraction.tcpsrcport(Trame),"------------------------------------------------------------------------------------------------->",extraction.tcpdstport(Trame)+"\n")
+            if(extraction.ipv4(Trame) and extraction.tcp(Trame) and not extraction.http(Trame)):
+                self.listBox.insert("Couche la plus haute : TCP"+"\n")
+                self.listBox.insert(extraction.ipsource(Trame),"                                                                                       ",extraction.ipdestination(Trame)+"\n")
+                self.listBox.insert("               ",extraction.tcpflags2(Trame),extraction.tcpflags(Trame), "Win =",extraction.tcpWindow(Trame),"Len =", extraction.tcplen(Trame),"Seq =",extraction.tcpseq(Trame),"Ack =",extraction.tcpack(Trame)+"\n")
+                self.listBox.insert("   ",extraction.tcpsrcport(Trame),"------------------------------------------------------------------------------------------------->",extraction.tcpdstport(Trame)+"\n")
+                #print("Commentaire : ",tcpsrcport(Trame), " -> ", tcpdstport(Trame), tcpflags2(Trame),"Seq =",tcpseq(Trame), tcpflags(Trame), "Win =", tcpWindow(Trame), "Len =", tcplen(Trame))
+            if(extraction.ipv4(Trame) and not extraction.tcp(Trame) and not extraction.http(Trame)):
+                self.listBox.insert("IP source", extraction.ipsource(Trame), "--------> IP destination", extraction.ipdestination(Trame)+"\n")
+            self.listBox.insert("\n")
+    """
+
+
+
+
+
+
+
+
+    
+    def affichageFrame(self, frames): 
+        for frame in frames: 
+            src_ip, srcport, fleche, dest_ip, destport, prot, des, = self.analyse(frame)
+            self.listbox.insert(END, src_ip)
+            self.listbox.insert(END, srcport)
+            self.listbox.insert(END, fleche)
+            self.listbox.insert(END, dest_ip)
+            self.listbox.insert(END, destport)
+            self.listbox.insert(END, prot)
+            self.listbox.insert(END, des)
+        
+            self.i = self.i+1
+    
+        
+
+
+    """
+    def analyse(self,trame):
+
         flecheDroite="--------→"
         flecheGauche="←--------"
 
@@ -123,7 +205,7 @@ class Visualisateur:
         #adresses ip pair
         couple=self.couple_ip(entete_ip[7], entete_ip[8])
     #A FINIR 
-    
+    """
 
 
 
