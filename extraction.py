@@ -29,10 +29,6 @@ def extraction_eth(trame)->Eth:
     return (dest_addres, src_addres,type_eth)
 
 
-#def test_extraction_eth(trame)-> Eth: 
-#    extraction_eth(trame)
-
-
 #taille d'une adresse IP = 20 octets
 def extraction_ip(trame)-> Ip: 
     
@@ -73,7 +69,6 @@ def extraction_flags_tcp(trame)->tcp_flags:
 def is_trame_ip(trame)-> bool:
     #trame ip trame[12:14]=['08','00']
     return (trame[12:14] == ['08','00'] and trame[14][0]=='4')
-
 
 
 def is_trame_tcp(trame)->bool:

@@ -3,6 +3,7 @@ from tkinter import filedialog as fd
 from tkinter import ttk 
 from tkinter.ttk import *
 
+from random import randint 
 
 import tkinter.font as TkFont 
 import os
@@ -67,42 +68,44 @@ class Visualisateur:
         self.btn.destroy()
         self.interface.config(background ='white')
 
+
         #creation d'un menu permettant d'afficher les cadres des listbox et en scrollbar
-        self.framelistBox = Frame(self.interface, width=1020, height=720)
-        self.framelistBox.pack(side=TOP)
-        #creation d'une liste box 
-        self.listBox = Listbox(self.framelistBox, font="Times", width=90, height=30)
-        self.listBox.pack(side= LEFT)
+        self.frame = Frame(self.interface, width=1020, height=720 )
+        self.frame.pack(side=TOP)
+   
+        # create listboxes to display the frames
+
+
+        # listbox1 = source
+        self.listboxsrc = Listbox(self.frame, width=14, height=16,borderwidth=0,highlightthickness=0,font=("Helvetica", 14),exportselection=0,activestyle="none",background="#f0f0f0")
+        self.listboxsrc.grid(row=1,column=0,pady=30)
+        ip1label=Label(self.listboxsrc,text="Ip1",font=("Helvetica", 14))
+        ip1label.grid(row=0,column=0,sticky="s",pady=(30,0))
+        self.listboxlabel1=Label(self.listboxsrc,text="Ip1",font=("Helvetica", 14))
+
+        #creation des différentes listBoxe pour afficher les différentes partie de la trame
+        #self.listBox = Listbox(self.frame, font="Times", width=90, height=30)
+        #self.listBox.pack(side= LEFT)
         
+    
+
+        #creation de la liste de liste, permettant d'acceuillir toute les listes obtenue
+        #par la fonction analyse
+        #self.listListBox = Listbox(self.listBox, )
 
 
 
 
         #CREATION D'UNE SCROLLBAR POUR SCROOL LA LISTE BOX 
-        scroll = Scrollbar(self.listBox, orient='vertical')
-        scroll.pack(fill="both", expand="yes", padx = 10, pady=10)       
-        scroll.config(command=self.listBox.yview)
+        scroll = Scrollbar(self.frame, orient='vertical')
+        scroll.pack()  
+        #scroll.pack(fill="both", expand="yes", padx = 10, pady=10)       
+        scroll.config(command=self.frame.yview)
         self.listBox.config(yscrollcommand=scroll.set)
 
-
-
-
-    def affichageFrame(self, frames): 
-        for frame in frames: 
-            src_ip, srcport, fleche, dest_ip, destport, prot, des, = self.analyse(frame)
-            self.listbox.insert(END, src_ip)
-            self.listbox.insert(END, srcport)
-            self.listbox.insert(END, fleche)
-            self.listbox.insert(END, dest_ip)
-            self.listbox.insert(END, destport)
-            self.listbox.insert(END, prot)
-            self.listbox.insert(END, des)
-        
-            self.i = self.i+1
-        
-
-
     def analyse(self,trame):
+
+        #retourne la trame analyse 
         flecheDroite="--------→"
         flecheGauche="←--------"
 
@@ -121,6 +124,26 @@ class Visualisateur:
         couple=self.couple_ip(entete_ip[7], entete_ip[8])
     #A FINIR 
     
+
+
+
+
+    def affichageFrame(self, frames): 
+        for frame in frames: 
+            src_ip, srcport, fleche, dest_ip, destport, prot, description, = self.analyse(frame)
+            self.itemlist.append((src_ip, srcport, fleche, dest_ip, destport, prot, description))
+
+
+            self.listbox.insert(END, src_ip)
+            self.listbox.insert(END, srcport)
+            self.listbox.insert(END, fleche)
+            self.listbox.insert(END, dest_ip)
+            self.listbox.insert(END, destport)
+            self.listbox.insert(END, prot)
+            self.listbox.insert(END, description)
+        
+            self.i = self.i+1
+        
 
 
 
