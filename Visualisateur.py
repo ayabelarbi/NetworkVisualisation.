@@ -44,7 +44,7 @@ class Visualisateur:
 
     def lecture(file):
     #ouvre le fichier texte
-        with open(file, "r+") as file:
+        with open(file, "r") as file:
             lines = [l for l in (line.strip() for line in file) if l]  # retire les lignes vides
             Trames = []
             Trame = []
@@ -98,6 +98,7 @@ class Visualisateur:
         self.affichageFrame(self.fichier_frames)
         self.premier_fichier_ouvert=False
         print(self.fichier_frames)
+
 
     
     fichier_frames_nettoye= lecture(fichier_frames)
@@ -203,6 +204,7 @@ class Visualisateur:
     def affichageFrame(self, listTrame): 
 
         for trame in listTrame: 
+
             src_ip = projet.ipsource(trame)
             print(src_ip)
             srcport = projet.ipsource(trame)
@@ -210,7 +212,7 @@ class Visualisateur:
             fleche = "----------------------------------->"
             print(fleche)
             dest_ip = projet.ipdstport(trame)
-            print(dest_ip )
+            print(dest_ip)
             destport = projet.tcp.dstport(trame)
             print(destport)
             protocole = "TCP"
