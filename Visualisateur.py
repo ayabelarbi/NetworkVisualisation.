@@ -99,7 +99,8 @@ class Visualisateur:
         self.premier_fichier_ouvert=False
         print(self.fichier_frames)
 
-    fichier_frames_nettoye=lecture(fichier_frames)
+    
+    fichier_frames_nettoye= lecture(fichier_frames)
     
     
 #front du visualisateur 2ème page du visualisateur 
