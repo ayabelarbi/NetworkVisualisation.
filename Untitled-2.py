@@ -160,7 +160,9 @@ def methodhttp(Trame):
         j = j + 1
     return res
 
-listbox=[] 
+
+
+
 def analyse(self,Trame):
         for Trame in Trame:
             if(self.ipv4(Trame) and self.tcp(Trame) and self.http(Trame)):
@@ -187,11 +189,11 @@ top=Tk()
 scrollbar = Scrollbar(top)
 scrollbar.pack( side = RIGHT, fill = Y )
 
-liste = Listbox(top, yscrollcommand = scrollbar.set )
 
-liste.insert(END,)
+listeBox = Listbox(top, yscrollcommand = scrollbar.set )
 
-liste.pack(side = LEFT, fill = BOTH )
+
+#liste.pack(side = LEFT, fill = BOTH )
 scrollbar.config(command = liste.yview )
 
 top.state("zoomed")

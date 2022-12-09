@@ -121,6 +121,16 @@ def methodhttp(Trame):
         j = j + 1
     return res
 
+
+def is_trame_tcp(trame)->bool:
+    #si le 23ème octet est 06 alors trame encapsule tcp 
+    return trame[23] =='06'
+
+def str_ip(trame_str)->bool: 
+    #return un adress ip d'une chaîne str
+    return str(int(trame_str[0:2],16))+"."+str(int(trame_str[2:4],16))+"."+str(int(trame_str[4:6],16))+"."+str(int(trame_str[6:8],16))
+
+
 """
 def extraction_flags_ip(flags_offset:str) -> tuple[str,str]:
     #function permettant de décortiquer la trame ip 
@@ -182,10 +192,6 @@ def is_trame_ip(trame)-> bool:
     #trame ip trame[12:14]=['08','00']
     return (trame[12:14] == ['08','00'] and trame[14][0]=='4')
 
-
-def is_trame_tcp(trame)->bool:
-    #si le 23ème octet est 06 alors trame encapsule tcp 
-    return trame[23] =='06'
 
 
 def is_trame_http(trame)->bool: 

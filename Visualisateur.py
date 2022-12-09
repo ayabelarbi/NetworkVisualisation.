@@ -63,14 +63,14 @@ class Visualisateur:
         self.lecturefile.insert(projet.lecture(fichier))
         """
 
-        #affichage des différentes frames (il peut y en avoir plusieurs dans le fichier ) 
+        #affichage des différentes frames (il peut y en avoir plusieurs dans le fichier) 
         self.affichageFrame(self.fichier_frames)
         self.premier_fichier_ouvert=False
         print(self.fichier_frames)
 
     
     
-#front du visualisateur 
+#front du visualisateur 2ème page du visualisateur 
     def visualisateur_structure(self): 
         self.bienvenu.destroy()
         self.btn.destroy()
@@ -85,11 +85,11 @@ class Visualisateur:
 
 
         # listbox1 = source
-        self.listboxsrc = Listbox(self.frame, width=14, height=16,borderwidth=0,highlightthickness=0,font=("Helvetica", 14),exportselection=0,activestyle="none",background="#f0f0f0")
+        self.listboxsrc = Listbox(self.frame, width=14, height=16,borderwidth=0,highlightthickness=0,font=("Courier", 14),exportselection=0,activestyle="none",background="#f0f0f0")
         self.listboxsrc.grid(row=1,column=0,pady=30)
-        ip1label=Label(self.listboxsrc,text="Ip1",font=("Helvetica", 14))
+        ip1label=Label(self.listboxsrc,text="Ip1",font=("Courier", 14))
         ip1label.grid(row=0,column=0,sticky="s",pady=(30,0))
-        self.listboxlabel1=Label(self.listboxsrc,text="Ip1",font=("Helvetica", 14))
+        self.listboxlabel1=Label(self.listboxsrc,text="Ip1",font=("Courier", 14))
 
         #creation des différentes listBoxe pour afficher les différentes partie de la trame
         #self.listBox = Listbox(self.frame, font="Times", width=90, height=30)
@@ -113,17 +113,20 @@ class Visualisateur:
         #scroll.pack(fill="both", expand="yes", padx = 10, pady=10)       
         scroll.config(command=self.frame.yview)
         self.listBox.config(yscrollcommand=scroll.set)
-
-    def analyse(self,trame):
-
-        #retourne la trame analyse 
-        scrollbar = Scrollbar(self.listBox, orient='vertical')
-        scrollbar.pack(side = RIGHT, fill=Y, expand="yes", padx = 10, pady=10)
-        scrollbar.config(command=self.listBox.yview)
-        self.listBox.config(yscrollcommand=scrollbar.set)
-    
         
-        """
+
+      # scroll one listbox scrolls all others
+    def __multiple_yview(self,*args): 
+        self.listbox1.yview(*args)
+        self.listbox2.yview(*args)
+        self.listbox3.yview(*args)
+        self.listbox4.yview(*args)
+        self.listbox5.yview(*args)
+        self.listbox6.yview(*args)
+        self.listbox7.yview(*args)
+
+    """def analyse(self,trame):
+  
         gui = Tk()
 
         scrollbar = Scrollbar(gui)
@@ -163,41 +166,86 @@ class Visualisateur:
     
     def affichageFrame(self, listFrame): 
         for frames in listFrame: 
-            src_ip, srcport, fleche, dest_ip, destport, prot, des, = self.analyse(listFrame)
+            src_ip, srcport, fleche, dest_ip, destport, protocole, description = self.analyse(listFrame)
             self.listbox.insert(END, src_ip)
             self.listbox.insert(END, srcport)
             self.listbox.insert(END, fleche)
             self.listbox.insert(END, dest_ip)
             self.listbox.insert(END, destport)
-            self.listbox.insert(END, prot)
-            self.listbox.insert(END, des)
+            self.listbox.insert(END, protocole)
+            self.listbox.insert(END, description)
         
             self.i = self.i+1
     
 
-    """
+    
     def analyse(self,trame):
 
         flecheDroite="--------→"
         flecheGauche="←--------"
 
+        #creation des entetes différentes 
         eth_entete  = extraction.extraction_eth(trame)
-        
+        ip_entete = extraction.extraire_ip(trame)
+        tcp_entete = extraction.extraction_tcp(trame)
+        str_ip_src = extraction.str_ip[7]
+        str_ip_dest = extraction.str_ip[8]
+        protocole = "TCP"
+
         if (not extraction.is_trame_ip(trame)): 
-            pas_eth = (eth_entete[1], "",flecheDroite,eth_entete[0],"", "None",'Pas une trame Ethernet')
+            pas_eth = (eth_entete[1], "",flecheDroite,eth_entete[0],"", "vide",'Pas une trame Ethernet')
             return pas_eth
 
-        entete_ip = extraction.extraire_ip(trame)
        
 
+        #verification de l'entete IP, minimum 20 octet de longueur
+        if (int(ip_entete[1],16)*4 < 20): 
+            return(eth_entete[1], " ", flecheDroite, eth_entete[0], "", "vide", "Pas une trame IP car l'entete est inferieur a 20 octets")
 
+        #Adresse IP 
+        #verification de l'adresse IP 
+        ipsrc_ipdest =self.couple_ip(ip_entete[7], ip_entete[8])
 
-        #adresses ip pair
-        couple=self.couple_ip(entete_ip[7], entete_ip[8])
-    #A FINIR 
-    """
+        if (ipsrc_ipdest  == None): 
+            print("Les adresses IP ne sont pas couplé, veuillez insérer une trame correcte")
+
+        # ABSENCE DE LA FRAGMENTATION IP 
+        if (not extraction.is_trame_tcp(trame)):
+            return (str_ip_src, "", flecheDroite, str_ip_dest,"","IP" "Ce n'est pas une trame TCP")
+
+        #entete tcp < 20 
+        if(tcp_entete[4]<20):
+            return (str_ip_src,"vide", flecheDroite, str_ip_dest,"vide","IP","Pas une trame TCP car l'entete est inferieur a 20")
         
+        #entete TCP et ces drapeau 
+        tcp_drapeau = tcp_entete[5]
+        if (tcp_drapeau[0] =='1'):
+            description = description + "[URG]"
+        if (tcp_drapeau[1] =='1'): 
+            description = description + "[ACK]"
+        if (tcp_drapeau[2] =='1'): 
+            description = description + "[PSH]"
+        if (tcp_drapeau[3] == '1'):
+            description = description + "[RST]"
+        if (tcp_drapeau[4] == '1'):
+            description = description + "[SYN]"
+        if (tcp_drapeau[5] == '1'): 
+            description = description + "[FIN]"
 
+        #si le port n'est pas 80 
+        if (tcp_entete[0] =='0050' or tcp_entete[1] =='0050'): 
+            http = extraction.extraction_http(trame)
+
+ def analyse(self,frame):
+
+    
+            infos=infos+" [FIN]"
+        if ( tcp_header[0]=='0050' or tcp_header[1]=='0050'): # if the port is not 80 (HTTP)
+            http=extract.extract_http(frame)
+            infos=infos+" "+http    
+            prot=prot+"/HTTP"
+            
+        return (extract.str_to_ip(ip_header[7]),str(int(tcp_header[0],16)),arrow,extract.str_to_ip(ip_header[8]),str(int(tcp_header[1],16)),prot,infos,color)
 
 
     def affichage(self):
