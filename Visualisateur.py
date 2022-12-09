@@ -84,8 +84,6 @@ class Visualisateur:
         self.frame = Frame(self.interface, width=1020, height=720 )
         self.frame.pack(side=TOP)
 
-
-
         # listboxsrc = src_ip
         self.listboxsrc = Listbox(self.frame, width=14, height=16,borderwidth=0,highlightthickness=0,font=("Courier", 16))
         self.listboxsrc.grid(row=0,column=0,pady=30)
@@ -125,8 +123,8 @@ class Visualisateur:
         description.grid(row=0,column=6,sticky="s",pady=(30,0))
 
         #scrollbar
-        scrollbar = Scrollbar(self.interface)
-        scrollbar.pack( side = RIGHT, fill = Y )
+        scroll = Scrollbar(self.frame, orient='vertical')
+        scroll.pack()  
         self.listboxsrc.config(yscrollcommand=scrollbar.set)
         self.listboxsrc_port.config(yscrollcommand=scrollbar.set)
         self.listboxfleche.config(yscrollcommand=scrollbar.set)
@@ -140,8 +138,7 @@ class Visualisateur:
         #self.listListBox = Listbox(self.listBox, )
 
         #CREATION D'UNE SCROLLBAR POUR SCROOL LA LISTE BOX 
-        scroll = Scrollbar(self.frame, orient='vertical')
-        scroll.pack()  
+
         
 
       # scroll one listbox scrolls all others
@@ -167,19 +164,20 @@ class Visualisateur:
 
         liste.pack(side = LEFT, fill = BOTH )
         scrollbar.config(command = liste.yview )
-        """
+    """
 
         
     def affichageFrame(self, listFrame): 
+
         for frames in listFrame: 
             src_ip, srcport, fleche, dest_ip, destport, protocole, description = self.analyse(listFrame)
             self.listboxsrc.insert(END, src_ip)
             self.listboxsrc_port.insert(END, srcport)
-            self.listbox.insert(END, fleche)
-            self.listbox.insert(END, dest_ip)
-            self.listbox.insert(END, destport)
-            self.listbox.insert(END, protocole)
-            self.listbox.insert(END, description)
+            self.listboxfleche.insert(END, fleche)
+            self.listboxdestination.insert(END, dest_ip)
+            self.listboxdestinationport.insert(END, destport)
+            self.listboxProtocol.insert(END, protocole)
+            self.listBoxDescription.insert(END, description)
         
             self.i = self.i+1
     

@@ -165,15 +165,14 @@ from tkinter import *
 import tkinter as tk
 top=Tk()
 
-scrollbar = Scrollbar(top)
-scrollbar.pack( side = RIGHT, fill = Y )
 
 
-listeBox = Listbox(top, yscrollcommand = scrollbar.set)
+
+#listeBox = Listbox(top, yscrollcommand = scrollbar.set)
 
 
 #liste.pack(side = LEFT, fill = BOTH )
-scrollbar.config(command = listeBox.yview )
+#scrollbar.config(command = listeBox.yview )
 
 
 # def analyse(self,Trame):
@@ -199,33 +198,6 @@ scrollbar.config(command = listeBox.yview )
 Trame = lecture(sys.argv[1])
 print(Trame)
 
-def analyse(self, Trame):
-
-    flecheDroite = "------------------------------------------------------------------------------------------------->"
-    for trames in Trame:
-        self.listeBox.insert(END,trames)
 
 top.state("zoomed")
 top.mainloop()
-  """
-    def analyse(self,Trame):
-
-        for Trame in Trame:
-            if(extraction.ipv4(Trame) and extraction.tcp(Trame) and extraction.http(Trame)):
-                self.listBox.insert("Couche la plus haute : HTTP"+"\n")
-                self.listBox.insert(extraction.ipsource(Trame),"                                                                                       ",extraction.ipdestination(Trame)+"\n")
-                self.listBox.insert("                                             ",extraction.methodhttp(Trame)+"\n")
-                self.listBox.insert("   ",extraction.tcpsrcport(Trame),"------------------------------------------------------------------------------------------------->",extraction.tcpdstport(Trame)+"\n")
-            if(extraction.ipv4(Trame) and extraction.tcp(Trame) and not extraction.http(Trame)):
-                self.listBox.insert("Couche la plus haute : TCP"+"\n")
-                self.listBox.insert(extraction.ipsource(Trame),"                                                                                       ",extraction.ipdestination(Trame)+"\n")
-                self.listBox.insert("               ",extraction.tcpflags2(Trame),extraction.tcpflags(Trame), "Win =",extraction.tcpWindow(Trame),"Len =", extraction.tcplen(Trame),"Seq =",extraction.tcpseq(Trame),"Ack =",extraction.tcpack(Trame)+"\n")
-                self.listBox.insert("   ",extraction.tcpsrcport(Trame),"------------------------------------------------------------------------------------------------->",extraction.tcpdstport(Trame)+"\n")
-                #print("Commentaire : ",tcpsrcport(Trame), " -> ", tcpdstport(Trame), tcpflags2(Trame),"Seq =",tcpseq(Trame), tcpflags(Trame), "Win =", tcpWindow(Trame), "Len =", tcplen(Trame))
-            if(extraction.ipv4(Trame) and not extraction.tcp(Trame) and not extraction.http(Trame)):
-                self.listBox.insert("IP source", extraction.ipsource(Trame), "--------> IP destination", extraction.ipdestination(Trame)+"\n")
-            self.listBox.insert("\n")
-    """
-
-
-#print(t)
