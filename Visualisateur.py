@@ -193,6 +193,7 @@ class Visualisateur:
         scrollbar.config(command = liste.yview )
     """
 
+
    
         
     def affichageFrame(self, listTrame): 
@@ -223,6 +224,7 @@ class Visualisateur:
         
             self.i = self.i+1
 
+        
     
 
     def analyse(self,trame):
