@@ -1,6 +1,23 @@
 import sys
 import os
 
+"""from tkinter import *
+
+
+
+top=Tk()
+t = [("1","2","3","4","5"),("aa","bb","cc","dd","ee"),("!@","%^","&*","@#","@$"),("A","B","C","D","E")]
+
+for x in range(4):
+    for y in range(5):
+            w = Text(top, width=15, height=2)
+            w.grid(row=x,column=y)
+            w.insert(END, t[x][y])
+
+top.state("zoomed")
+top.mainloop()
+
+"""
 
 def lecture(file):
     #ouvre le fichier texte
@@ -30,9 +47,6 @@ def lecture(file):
         #ferme le fichier
         file.close()
         return Trames
-
-
-"""
 
 def ipv4(Trame):
     return (Trame[0][12] == "08" and Trame[0][13] == "00")
@@ -145,25 +159,43 @@ def methodhttp(Trame):
         res = res + chr(to_decimal(Trame[i][j]))
         j = j + 1
     return res
-        
-  
-"""
 
-"""def flowgraph(Trames):
-    for Trame in Trames:
-        if(ipv4(Trame) and tcp(Trame) and http(Trame)):
-            print("Couche la plus haute : HTTP")
-            print(ipsource(Trame),"                                                                                       ",ipdestination(Trame))
-            print("                                             ",methodhttp(Trame))
-            print("   ",tcpsrcport(Trame),"------------------------------------------------------------------------------------------------->",tcpdstport(Trame))
-        if(ipv4(Trame) and tcp(Trame) and not http(Trame)):
-            print("Couche la plus haute : TCP")
-            print(ipsource(Trame),"                                                                                       ",ipdestination(Trame))
-            print("               ",tcpflags2(Trame),tcpflags(Trame), "Win =",tcpWindow(Trame),"Len =", tcplen(Trame),"Seq =",tcpseq(Trame),"Ack =",tcpack(Trame))
-            print("   ",tcpsrcport(Trame),"------------------------------------------------------------------------------------------------->",tcpdstport(Trame))
-            #print("Commentaire : ",tcpsrcport(Trame), " -> ", tcpdstport(Trame), tcpflags2(Trame),"Seq =",tcpseq(Trame), tcpflags(Trame), "Win =", tcpWindow(Trame), "Len =", tcplen(Trame))
-        if(ipv4(Trame) and not tcp(Trame) and not http(Trame)):
-            print("IP source", ipsource(Trame), "--------> IP destination", ipdestination(Trame))
-        print("\n")
-        
-flowgraph(lecture(sys.argv[1]))"""
+def analyse(self,Trame):
+
+        for Trame in Trame:
+            if(self.ipv4(Trame) and self.tcp(Trame) and self.http(Trame)):
+                self.listBox.insert("Couche la plus haute : HTTP"+"\n")
+                self.listBox.insert(self.ipsource(Trame),"                                                                                       ",self.ipdestination(Trame)+"\n")
+                self.listBox.insert("                                             ",self.methodhttp(Trame)+"\n")
+                self.listBox.insert("   ",self.tcpsrcport(Trame),"------------------------------------------------------------------------------------------------->",self.tcpdstport(Trame)+"\n")
+            if(self.ipv4(Trame) and self.tcp(Trame) and not self.http(Trame)):
+                self.listBox.insert("Couche la plus haute : TCP"+"\n")
+                self.listBox.insert(self.ipsource(Trame),"                                                                                       ",self.ipdestination(Trame)+"\n")
+                self.listBox.insert("               ",self.tcpflags2(Trame),self.tcpflags(Trame), "Win =",self.tcpWindow(Trame),"Len =", self.tcplen(Trame),"Seq =",self.tcpseq(Trame),"Ack =",self.tcpack(Trame)+"\n")
+                self.listBox.insert("   ",self.tcpsrcport(Trame),"------------------------------------------------------------------------------------------------->",self.tcpdstport(Trame)+"\n")
+                #print("Commentaire : ",tcpsrcport(Trame), " -> ", tcpdstport(Trame), tcpflags2(Trame),"Seq =",tcpseq(Trame), tcpflags(Trame), "Win =", tcpWindow(Trame), "Len =", tcplen(Trame))
+            if(self.ipv4(Trame) and not self.tcp(Trame) and not self.http(Trame)):
+                self.listBox.insert("IP source", self.ipsource(Trame), "--------> IP destination", self.ipdestination(Trame)+"\n")
+            self.listBox.insert("\n")
+
+from tkinter import *
+import tkinter as tk
+
+
+top=Tk()
+
+scrollbar = Scrollbar(top)
+scrollbar.pack( side = RIGHT, fill = Y )
+
+liste = Listbox(top, yscrollcommand = scrollbar.set )
+
+liste.insert(END,Listbox)
+
+liste.pack(side = LEFT, fill = BOTH )
+scrollbar.config(command = liste.yview )
+
+top.state("zoomed")
+top.mainloop()
+
+
+#print(t)
