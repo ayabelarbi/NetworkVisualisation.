@@ -29,7 +29,3 @@ adress IP source         adress IP destination
         |                           |
 numéro de port src          numero de port dest 
     >= 1024                         80 (WEB)
-
-
-
-
