@@ -211,7 +211,7 @@ class Visualisateur:
                 self.listBoxDescription.insert(END, "pas de protocole encapsulant http ni tcp ")
         
             self.i = self.i+1
-        print(str)
+        print(msg)
 
     def affichage(self):
         self.interface.mainloop()
