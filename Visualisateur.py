@@ -180,12 +180,12 @@ class Visualisateur:
 
         for trame in listTrame: 
           
-            src_ip = extraction.ipsource(trame)
-            dest_ip = extraction.ipdestination(trame)
+            src_ip = extraction.ip_source(trame)
+            dest_ip = extraction.ip_destination(trame)
             fleche = "--------------->"
-            srcport = extraction.tcpsrcport(trame)
-            destport = extraction.tcpdstport(trame)
-            description = extraction.tcpflags2(trame)
+            srcport = extraction.tcp_srcport(trame)
+            destport = extraction.tcp_destport(trame)
+            description = extraction.drapeau_tcp(trame)
 
             #condition pour tester si http dans trame  
             if(extraction.ipv4(trame) and extraction.is_tcp(trame) and extraction.is_http(trame)):
@@ -195,7 +195,7 @@ class Visualisateur:
                 self.listboxdestination.insert(END, dest_ip)
                 self.listboxdestinationport.insert(END, destport)
                 self.listboxProtocol.insert(END, "HTTP")
-                methodhttp = extraction.methodhttp(trame)
+                methodhttp = extraction.HTTP_method(trame)
                 description.append(methodhttp)
                 self.listBoxDescription.insert(END, description)
                 
@@ -219,6 +219,7 @@ class Visualisateur:
                 self.listBoxDescription.insert(END, "pas de protocole encapsulant http ni tcp ")
         
             self.i = self.i+1
+
 
     def affichage(self):
         self.interface.mainloop()
