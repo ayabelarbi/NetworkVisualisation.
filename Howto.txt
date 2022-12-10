@@ -1,6 +1,10 @@
 Pour lancer le fichier,
 
+- Veuillez installer les librairies suivantes afin d'afficher le visualisateur : 
+
+
 - Placez vous dans le repertoire du projet puis lancez la commande:
     python3 Visualisateur.py
 
 - Suivre les instruction affichées dans la fenetre.
+    
