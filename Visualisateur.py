@@ -73,7 +73,6 @@ class Visualisateur:
                 Trame.append(ltrame)
         Trames.append(Trame)
         #ferme le fichier
-        print(Trames)
         fichier_lecture.close()
 
         #j'ouvre la deuxième fenetre
