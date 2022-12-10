@@ -166,6 +166,7 @@ class Visualisateur:
    
         
     def affichageFrame(self, listTrame): 
+        str="Ip-src    port-src"+"--------------->"+"Ip-dest    port-dest   protocole           description\n\n"
 
         for trame in listTrame: 
           
@@ -176,6 +177,7 @@ class Visualisateur:
             destport = extraction.tcp_destport(trame)
             description = extraction.drapeau_tcp(trame)
 
+            
             #condition pour tester si http dans trame  
             if(extraction.ipv4(trame) and extraction.is_tcp(trame) and extraction.is_http(trame)):
                 self.listboxsrc.insert(END, src_ip)
@@ -187,6 +189,7 @@ class Visualisateur:
                 methodhttp = extraction.HTTP_method(trame)
                 description.append(methodhttp)
                 self.listBoxDescription.insert(END, description)
+                str+=str.src_ip+"   "+str.srcport+"--------------->"+str.dest_ip+"   "+str.destport+"   "+"HTTP"+"   "+str.description+"   "+"\n"
                 
 
             if(extraction.ipv4(trame) and extraction.is_tcp(trame) and not extraction.is_http(trame)):
@@ -208,7 +211,7 @@ class Visualisateur:
                 self.listBoxDescription.insert(END, "pas de protocole encapsulant http ni tcp ")
         
             self.i = self.i+1
-
+        print(str)
 
     def affichage(self):
         self.interface.mainloop()
