@@ -92,6 +92,7 @@ class Visualisateur:
         #je repartie les donnée dans les piles (cad listBox)
         self.affichageFrame(Trames)
 
+    fichier_frames=''
 
 #front du visualisateur 2ème page du visualisateur 
     def visualisateur_structure(self): 
@@ -177,6 +178,8 @@ class Visualisateur:
         self.listBoxDescription.yview(*args)
 
 
+   
+        
     def affichageFrame(self, listTrame): 
 
         for trame in listTrame: 
