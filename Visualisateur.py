@@ -137,21 +137,20 @@ class Visualisateur:
         description.grid(row=0,column=6,sticky="s",pady=(40,0))
 
         #scrollbar
-        scroll = tk.Scrollbar(self.frame, orient='vertical')
-   
-        # self.listboxsrc.config(yscrollcommand=scroll.set)
-        # self.listboxsrc_port.config(yscrollcommand=scroll.set)
-        # self.listboxfleche.config(yscrollcommand=scroll.set)
-        # self.listboxdestination.config(yscrollcommand=scroll.set)
-        # self.listboxdestinationport.config(yscrollcommand=scroll.set)
-        # self.listboxProtocol.config(yscrollcommand=scroll.set)
-        # self.listBoxDescription.config(yscrollcommand=scroll.set)
+        scroll = Scrollbar(self.frame, orient='vertical')
+        scroll.grid(row=1,column=7,pady=30,sticky="ns")
+        scroll.config(command=self.__multiple_yview)
 
-        # self.frame.config(yscrollcommand = scroll.set)
-        # self.frame.pack(side="left", fill="both", expand=True)
-        # scroll.pack(side="right", fill="y")
+        self.listboxsrc.config(yscrollcommand=scroll.set)
+        self.listboxsrc_port.config(yscrollcommand=scroll.set)
+        self.listboxfleche.config(yscrollcommand=scroll.set)
+        self.listboxdestination.config(yscrollcommand=scroll.set)
+        self.listboxdestinationport.config(yscrollcommand=scroll.set)
+        self.listboxProtocol.config(yscrollcommand=scroll.set)
+        self.listBoxDescription.config(yscrollcommand=scroll.set)
 
 
+    #si une listbox scrolls, toute les autres se scroll aussi 
     def __multiple_yview(self,*args): 
         self.listboxsrc.yview(*args)
         self.listboxsrc_port.yview(*args)
