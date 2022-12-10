@@ -115,7 +115,8 @@ class Visualisateur:
         self.listboxsrc_port = Listbox(self.frame, width=7, height=16,borderwidth=0, foreground= "red", highlightthickness=0,font=("Courier", 14))
         self.listboxsrc_port.grid(row=1,column=2,pady=30)
         src_port=Label(self.frame,text="port src", foreground= "red", font=("Courier", 14))
-        src_port.grid(row=0,column=2,sticky="s",pady=(30,0))
+        src_port.grid(row=0,column=1,sticky="s",pady=(30,0))
+        
         #listboxdestinationport = port destination
         self.listboxdestinationport=Listbox(self.frame,width=7,height=16,borderwidth=0,highlightthickness=0,font=("Courier", 14))
         self.listboxdestinationport.grid(row=1,column=5,pady=30)
@@ -146,7 +147,7 @@ class Visualisateur:
         scroll = Scrollbar(self.frame, orient='vertical')
         scroll.grid(row=1,column=8,pady=30,sticky="ns")
         scroll.config(command=self.__multiple_yview)
-
+   
         self.listboxsrc.config(yscrollcommand=scroll.set)
         self.listboxsrc_port.config(yscrollcommand=scroll.set)
         self.listboxfleche.config(yscrollcommand=scroll.set)
