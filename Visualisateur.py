@@ -6,13 +6,9 @@ from tkinter.ttk import *
 from random import randint 
 
 import tkinter.font as TkFont 
-import os
-import sys
 import extraction
 import tkinter as tk
-
-import parsing
-import extraction
+import os
 
 
 
@@ -192,7 +188,7 @@ class Visualisateur:
             description = extraction.tcpflags2(trame)
 
             #condition pour tester si http dans trame  
-            if(extraction.ipv4(trame) and extraction.tcp(trame) and extraction.http(trame)):
+            if(extraction.ipv4(trame) and extraction.is_tcp(trame) and extraction.is_http(trame)):
                 self.listboxsrc.insert(END, src_ip)
                 self.listboxsrc_port.insert(END, srcport)
                 self.listboxfleche.insert(END, fleche)
@@ -204,7 +200,7 @@ class Visualisateur:
                 self.listBoxDescription.insert(END, description)
                 
 
-            if(extraction.ipv4(trame) and extraction.tcp(trame) and not extraction.http(trame)):
+            if(extraction.ipv4(trame) and extraction.is_tcp(trame) and not extraction.is_http(trame)):
                 self.listboxsrc.insert(END, src_ip)
                 self.listboxsrc_port.insert(END, srcport)
                 self.listboxfleche.insert(END, fleche)
@@ -213,7 +209,7 @@ class Visualisateur:
                 self.listboxProtocol.insert(END, "TCP")
                 self.listBoxDescription.insert(END, description)
 
-            if(extraction.ipv4(trame) and not extraction.tcp(trame) and not extraction.http(trame)):
+            if(extraction.ipv4(trame) and not extraction.is_tcp(trame) and not extraction.is_http(trame)):
                 self.listboxsrc.insert(END, src_ip)
                 self.listboxsrc_port.insert(END, "vide")
                 self.listboxfleche.insert(END, fleche)
@@ -223,62 +219,6 @@ class Visualisateur:
                 self.listBoxDescription.insert(END, "pas de protocole encapsulant http ni tcp ")
         
             self.i = self.i+1
-
-        
-    def analyse(self,trame):
-
-        flecheDroite="----→"
-
-        #creation des entetes différentes 
-        eth_entete  = extraction.extraction_eth(trame)
-        ip_entete = extraction.extraire_ip(trame)
-        tcp_entete = extraction.extraction_tcp(trame)
-        str_ip_src = extraction.str_ip[7]
-        str_ip_dest = extraction.str_ip[8]
-        protocole = "TCP"
-
-        if (not extraction.is_trame_ip(trame)): 
-            pas_eth = (eth_entete[1], "",flecheDroite,eth_entete[0],"", "vide",'Pas une trame Ethernet')
-            return pas_eth
-
-        #verification de l'entete IP, minimum 20 octet de longueur
-        if (int(ip_entete[1],16)*4 < 20): 
-            return(eth_entete[1], " ", flecheDroite, eth_entete[0], "", "vide", "Pas une trame IP car l'entete est inferieur a 20 octets")
-
-        #Adresse IP 
-        #verification de l'adresse IP 
-        ipsrc_ipdest =self.couple_ip(ip_entete[7], ip_entete[8])
-
-        if (ipsrc_ipdest  == None): 
-            print("Les adresses IP ne sont pas couplé, veuillez insérer une trame correcte")
-
-        # ABSENCE DE LA FRAGMENTATION IP 
-        if (not extraction.is_trame_tcp(trame)):
-            return (str_ip_src, "", flecheDroite, str_ip_dest,"","IP" "Ce n'est pas une trame TCP")
-
-        #entete tcp < 20 
-        if(tcp_entete[4]<20):
-            return (str_ip_src,"vide", flecheDroite, str_ip_dest,"vide","IP","Pas une trame TCP car l'entete est inferieur a 20")
-        
-        #entete TCP et ces drapeau 
-        tcp_drapeau = tcp_entete[5]
-        if (tcp_drapeau[0] =='1'):
-            description = description + "[URG]"
-        if (tcp_drapeau[1] =='1'): 
-            description = description + "[ACK]"
-        if (tcp_drapeau[2] =='1'): 
-            description = description + "[PSH]"
-        if (tcp_drapeau[3] == '1'):
-            description = description + "[RST]"
-        if (tcp_drapeau[4] == '1'):
-            description = description + "[SYN]"
-        if (tcp_drapeau[5] == '1'): 
-            description = description + "[FIN]"
-
-     
-        
-        return (str_ip_src, str(int(tcp_entete[0],16)), flecheDroite,str_ip_dest, str(int(tcp_entete[1], 16)), protocole, description)
-
 
     def affichage(self):
         self.interface.mainloop()
