@@ -11,8 +11,6 @@ import tkinter as tk
 import os
 
 
-
-
 class Visualisateur: 
     #creation du constructeur
     def __init__(self):
@@ -78,17 +76,11 @@ class Visualisateur:
         print(Trames)
         fichier_lecture.close()
 
-       
-
-        #if (self.premier_fichier_ouvert):
-        #    self.visualisateur_structure()
-
         #j'ouvre la deuxième fenetre
         self.visualisateur_structure()
         #je repartie les donnée dans les piles (cad listBox)
         self.affichageFrame(Trames)
 
-    fichier_frames=''
 
 #front du visualisateur 2ème page du visualisateur 
     def visualisateur_structure(self): 
@@ -159,9 +151,6 @@ class Visualisateur:
         # self.frame.config(yscrollcommand = scroll.set)
         # self.frame.pack(side="left", fill="both", expand=True)
         # scroll.pack(side="right", fill="y")
-        #creation de la liste de liste, permettant d'acceuillir toute les listes obtenue
-        #par la fonction analyse
-        #self.listListBox = Listbox(self.listBox, )
 
 
     def __multiple_yview(self,*args): 
