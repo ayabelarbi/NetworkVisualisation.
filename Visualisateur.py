@@ -166,7 +166,7 @@ class Visualisateur:
    
         
     def affichageFrame(self, listTrame): 
-        msg="Ip-src        port-src"+"          "+"  Ip-dest     port-dest   protocole           description\n\n"
+        msg="Ip-src        port-src"+"          "+"  Ip-dest          port-dest   protocole           description\n\n"
 
         for trame in listTrame: 
           
@@ -189,7 +189,7 @@ class Visualisateur:
                 methodhttp = extraction.HTTP_method(trame)
                 description.append(methodhttp)
                 self.listBoxDescription.insert(END, description)
-                msg+=str(src_ip)+"   "+str(srcport)+"--------------->"+str(dest_ip)+"   "+str(destport) +"   "+"   HTTP"+"              "+str(description)+"   "+"\n"
+                msg+=str(src_ip)+"   "+str(srcport)+"--------------->"+str(dest_ip)+"        "+str(destport) +"   "+"   HTTP"+"              "+str(description)+"   "+"\n"
                 
 
             if(extraction.ipv4(trame) and extraction.is_tcp(trame) and not extraction.is_http(trame)):
@@ -200,6 +200,7 @@ class Visualisateur:
                 self.listboxdestinationport.insert(END, destport)
                 self.listboxProtocol.insert(END, "TCP")
                 self.listBoxDescription.insert(END, description)
+                msg+=str(src_ip)+"   "+str(srcport)+"--------------->"+str(dest_ip)+"        "+str(destport) +"   "+"   TCP"+"              "+str(description)+"   "+"\n"
 
             if(extraction.ipv4(trame) and not extraction.is_tcp(trame) and not extraction.is_http(trame)):
                 self.listboxsrc.insert(END, src_ip)
@@ -209,6 +210,7 @@ class Visualisateur:
                 self.listboxdestinationport.insert(END, "vide")
                 self.listboxProtocol.insert(END, "IP seul")
                 self.listBoxDescription.insert(END, "pas de protocole encapsulant http ni tcp ")
+                msg+=str(src_ip)+"   "+"vide"+"--------------->"+str(dest_ip)+"        "+"vide" +"   "+"   IP seul"+"              "+"pas de protocole encapsulant http ni tcp "+"   "+"\n"
         
             self.i = self.i+1
         print(msg)
