@@ -160,9 +160,9 @@ class Visualisateur:
         # self.listboxProtocol.config(yscrollcommand=scroll.set)
         # self.listBoxDescription.config(yscrollcommand=scroll.set)
 
-        self.frame.config(yscrollcommand = scroll.set)
-        self.frame.pack(side="left", fill="both", expand=True)
-        scroll.pack(side="right", fill="y")
+        # self.frame.config(yscrollcommand = scroll.set)
+        # self.frame.pack(side="left", fill="both", expand=True)
+        # scroll.pack(side="right", fill="y")
         #creation de la liste de liste, permettant d'acceuillir toute les listes obtenue
         #par la fonction analyse
         #self.listListBox = Listbox(self.listBox, )
