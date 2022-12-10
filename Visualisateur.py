@@ -165,54 +165,58 @@ class Visualisateur:
    
         
     def affichageFrame(self, listTrame): 
-        msg="Ip-src        port-src"+"          "+"  Ip-dest          port-dest   protocole           description\n\n"
+        with open("FrameOutput.txt", "w") as f: 
+            msg="Ip-src        port-src"+"          "+"  Ip-dest          port-dest   protocole           description\n\n"
 
-        for trame in listTrame: 
-          
-            src_ip = extraction.ip_source(trame)
-            dest_ip = extraction.ip_destination(trame)
-            fleche = "--------------->"
-            srcport = extraction.tcp_srcport(trame)
-            destport = extraction.tcp_destport(trame)
-            description = extraction.drapeau_tcp(trame)
+            for trame in listTrame: 
 
-            
-            #condition pour tester si http dans trame  
-            if(extraction.ipv4(trame) and extraction.is_tcp(trame) and extraction.is_http(trame)):
-                self.listboxsrc.insert(END, src_ip)
-                self.listboxsrc_port.insert(END, srcport)
-                self.listboxfleche.insert(END, fleche)
-                self.listboxdestination.insert(END, dest_ip)
-                self.listboxdestinationport.insert(END, destport)
-                self.listboxProtocol.insert(END, "HTTP")
-                methodhttp = extraction.HTTP_method(trame)
-                description.append(methodhttp)
-                self.listBoxDescription.insert(END, description)
-                msg+=str(src_ip)+"   "+str(srcport)+"--------------->"+str(dest_ip)+"        "+str(destport) +"   "+"   HTTP"+"             "+str(description)+"   "+"\n"
+                src_ip = extraction.ip_source(trame)
+                dest_ip = extraction.ip_destination(trame)
+                fleche = "--------------->"
+                srcport = extraction.tcp_srcport(trame)
+                destport = extraction.tcp_destport(trame)
+                description = extraction.drapeau_tcp(trame)
                 
 
-            if(extraction.ipv4(trame) and extraction.is_tcp(trame) and not extraction.is_http(trame)):
-                self.listboxsrc.insert(END, src_ip)
-                self.listboxsrc_port.insert(END, srcport)
-                self.listboxfleche.insert(END, fleche)
-                self.listboxdestination.insert(END, dest_ip)
-                self.listboxdestinationport.insert(END, destport)
-                self.listboxProtocol.insert(END, "TCP")
-                self.listBoxDescription.insert(END, description)
-                msg+=str(src_ip)+"   "+str(srcport)+"--------------->"+str(dest_ip)+"        "+str(destport) +"   "+"   TCP"+"              "+str(description)+"   "+"\n"
+                #condition pour tester si http dans trame  
+                if(extraction.ipv4(trame) and extraction.is_tcp(trame) and extraction.is_http(trame)):
+                    self.listboxsrc.insert(END, src_ip)
+                    self.listboxsrc_port.insert(END, srcport)
+                    self.listboxfleche.insert(END, fleche)
+                    self.listboxdestination.insert(END, dest_ip)
+                    self.listboxdestinationport.insert(END, destport)
+                    self.listboxProtocol.insert(END, "HTTP")
+                    methodhttp = extraction.HTTP_method(trame)
+                    description.append(methodhttp)
+                    self.listBoxDescription.insert(END, description)
+                    msg+=str(src_ip)+"   "+str(srcport)+"--------------->"+str(dest_ip)+"        "+str(destport) +"   "+"   HTTP"+"             "+str(description)+"   "+"\n"
 
-            if(extraction.ipv4(trame) and not extraction.is_tcp(trame) and not extraction.is_http(trame)):
-                self.listboxsrc.insert(END, src_ip)
-                self.listboxsrc_port.insert(END, "vide")
-                self.listboxfleche.insert(END, fleche)
-                self.listboxdestination.insert(END, dest_ip)
-                self.listboxdestinationport.insert(END, "vide")
-                self.listboxProtocol.insert(END, "IP seul")
-                self.listBoxDescription.insert(END, "pas de protocole encapsulant http ni tcp ")
-                msg+=str(src_ip)+"   "+"vide"+"--------------->"+str(dest_ip)+"        "+"vide" +"   "+"   IP seul"+"              "+"pas de protocole encapsulant http ni tcp "+"   "+"\n"
-        
-            self.i = self.i+1
+
+                if(extraction.ipv4(trame) and extraction.is_tcp(trame) and not extraction.is_http(trame)):
+                    self.listboxsrc.insert(END, src_ip)
+                    self.listboxsrc_port.insert(END, srcport)
+                    self.listboxfleche.insert(END, fleche)
+                    self.listboxdestination.insert(END, dest_ip)
+                    self.listboxdestinationport.insert(END, destport)
+                    self.listboxProtocol.insert(END, "TCP")
+                    self.listBoxDescription.insert(END, description)
+                    msg+=str(src_ip)+"   "+str(srcport)+"--------------->"+str(dest_ip)+"        "+str(destport) +"   "+"   TCP"+"              "+str(description)+"   "+"\n"
+
+                if(extraction.ipv4(trame) and not extraction.is_tcp(trame) and not extraction.is_http(trame)):
+                    self.listboxsrc.insert(END, src_ip)
+                    self.listboxsrc_port.insert(END, "vide")
+                    self.listboxfleche.insert(END, fleche)
+                    self.listboxdestination.insert(END, dest_ip)
+                    self.listboxdestinationport.insert(END, "vide")
+                    self.listboxProtocol.insert(END, "IP seul")
+                    self.listBoxDescription.insert(END, "pas de protocole encapsulant http ni tcp ")
+                    msg+=str(src_ip)+"   "+"vide"+"--------------->"+str(dest_ip)+"        "+"vide" +"   "+"   IP seul"+"              "+"pas de protocole encapsulant http ni tcp "+"   "+"\n"
+                self.i = self.i+1
+
+            f.write(msg)  
         print(msg)
+        f.close()
+        
 
     def affichage(self):
         self.interface.mainloop()
