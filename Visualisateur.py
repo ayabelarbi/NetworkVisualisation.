@@ -188,7 +188,7 @@ class Visualisateur:
                 methodhttp = extraction.HTTP_method(trame)
                 description.append(methodhttp)
                 self.listBoxDescription.insert(END, description)
-                msg+=str(src_ip)+"   "+str(srcport)+"--------------->"+str(dest_ip)+"        "+str(destport) +"   "+"   HTTP"+"              "+str(description)+"   "+"\n"
+                msg+=str(src_ip)+"   "+str(srcport)+"--------------->"+str(dest_ip)+"        "+str(destport) +"   "+"   HTTP"+"             "+str(description)+"   "+"\n"
                 
 
             if(extraction.ipv4(trame) and extraction.is_tcp(trame) and not extraction.is_http(trame)):
