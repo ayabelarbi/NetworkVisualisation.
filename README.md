@@ -22,19 +22,4 @@ Le visualisateur affichera toutes les trames dans l'ordre chronologique correspo
  Pour chaque trame, le visualisateur affichera les informations suivantes : 
 - L’adresse IP des deux machines impliquées.
 - Le numéro de port utilisé.
-
-Liste de chose a faire pour le projet : 
-
-affichage du temps (ListBox gauche)                                          affichage des adresse 
-1 : 00000 
-2 : 00001 ( temps que la trame recoivent les ACK/)
-
-
-Pour HTTP : 
-
-adress IP source         adress IP destination
-        |                           |
-        |                           |
-        |                           |
-numéro de port src          numero de port dest 
-    >= 1024                         80 (WEB)
+- un indice permettant de trier les trames par order croissant (une alternative au timer) 
